@@ -171,15 +171,18 @@ export default function Home() {
   });
 
   return (
-    <main className="min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
+    <main className="min-h-screen bg-dark-gradient py-8 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold text-gray-900 mb-2">Review Response Generator</h1>
-          <p className="text-lg text-gray-600">AI-powered responses to customer reviews</p>
+          <h1 className="text-5xl font-bold mb-2">
+            <span className="neon-text-cyan">Review Response</span>{" "}
+            <span className="neon-text-magenta">Generator</span>
+          </h1>
+          <p className="text-lg text-cyan-100/80">AI-powered responses to customer reviews</p>
         </div>
         <div className="grid gap-6 lg:grid-cols-[320px,1fr]">
           {/* Review Selection Panel */}
-          <section className="bg-white rounded-lg shadow-md p-4 lg:p-6 h-fit">
+          <section className="glass-card rounded-2xl p-4 lg:p-6 h-fit animate-fade-in-glass">
             <ReviewSelector
               reviews={filteredReviews}
               selectedReviewId={selectedReviewId}
@@ -190,25 +193,25 @@ export default function Home() {
           </section>
 
           {/* Workspace Panel */}
-          <section className="bg-white rounded-lg shadow-md overflow-hidden min-h-[600px]">
+          <section className="glass-card rounded-2xl overflow-hidden min-h-[600px] animate-fade-in-glass">
             {/* Tabs */}
-            <div className="flex border-b border-gray-200">
+            <div className="flex border-b border-white/10 bg-white/5">
               <button
                 onClick={() => setActiveTab("response")}
-                className={`flex-1 py-4 text-sm font-medium text-center border-b-2 transition-colors ${
+                className={`flex-1 py-4 text-sm font-semibold text-center border-b-2 transition-all duration-300 ${
                   activeTab === "response"
-                    ? "border-blue-600 text-blue-600"
-                    : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
+                    ? "border-cyan-400 text-cyan-300 neon-glow-cyan"
+                    : "border-transparent text-cyan-100/60 hover:text-cyan-300 hover:border-cyan-400/50"
                 }`}
               >
                 Review Response
               </button>
               <button
                 onClick={() => setActiveTab("summary")}
-                className={`flex-1 py-4 text-sm font-medium text-center border-b-2 transition-colors ${
+                className={`flex-1 py-4 text-sm font-semibold text-center border-b-2 transition-all duration-300 ${
                   activeTab === "summary"
-                    ? "border-blue-600 text-blue-600"
-                    : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
+                    ? "border-pink-400 text-pink-300 neon-glow-magenta"
+                    : "border-transparent text-cyan-100/60 hover:text-pink-300 hover:border-pink-400/50"
                 }`}
               >
                 Summary & Insights
@@ -219,9 +222,9 @@ export default function Home() {
               {activeTab === "response" ? (
                 <div className="space-y-6">
                   {!selectedReview && (
-                    <div className="flex flex-col items-center justify-center text-center text-gray-500 min-h-[300px] space-y-3">
-                      <p className="text-xl font-semibold text-gray-700">Pick a review to get started</p>
-                      <p className="max-w-md">
+                    <div className="flex flex-col items-center justify-center text-center text-cyan-100/60 min-h-[300px] space-y-3">
+                      <p className="text-xl font-semibold text-cyan-200">Pick a review to get started</p>
+                      <p className="max-w-md text-cyan-100/70">
                         Choose any review from the list to view its details, select a tone, and generate
                         an AI-assisted draft response.
                       </p>
@@ -231,34 +234,34 @@ export default function Home() {
                   {selectedReview && (
                     <>
                       <div className="space-y-3">
-                        <p className="text-sm font-semibold text-gray-500 uppercase tracking-wide">
+                        <p className="text-sm font-semibold text-cyan-300 uppercase tracking-wide">
                           Selected review
                         </p>
-                        <div className="rounded-lg border border-gray-200 p-4 bg-gray-50 space-y-2">
+                        <div className="glass rounded-xl border border-cyan-400/30 p-4 space-y-2 neon-glow-cyan">
                           <div className="space-y-2 mb-2">
                             <div className="flex items-center justify-between">
                               <div className="flex items-center gap-3">
-                                <span className="text-sm font-medium text-gray-900">
+                                <span className="text-sm font-medium text-cyan-100">
                                   {selectedReview.customerName}
                                 </span>
-                                <span className="text-yellow-500 text-sm">
+                                <span className="text-yellow-400 text-sm">
                                   {"★".repeat(selectedReview.rating) +
                                     "☆".repeat(5 - selectedReview.rating)}
                                 </span>
                               </div>
-                              <span className="px-2 py-1 text-xs font-semibold rounded bg-purple-100 text-purple-800 border border-purple-200">
+                              <span className="px-2 py-1 text-xs font-semibold rounded bg-purple-500/20 text-purple-300 border border-purple-400/30 neon-border-magenta">
                                 {selectedReview.productModel}
                               </span>
                             </div>
                             <div>
                               {selectedReview.answered && (
-                                <span className="px-2 py-1 text-xs font-semibold rounded bg-blue-100 text-blue-800 border border-blue-200">
+                                <span className="px-2 py-1 text-xs font-semibold rounded bg-cyan-500/20 text-cyan-300 border border-cyan-400/30 neon-border-cyan">
                                   Answered
                                 </span>
                               )}
                             </div>
                           </div>
-                          <p className="text-gray-800 leading-relaxed">{selectedReview.text}</p>
+                          <p className="text-cyan-50 leading-relaxed">{selectedReview.text}</p>
                         </div>
                       </div>
 
@@ -271,10 +274,10 @@ export default function Home() {
                         <button
                           onClick={handleGenerate}
                           disabled={!selectedTone || responseMutation.isPending}
-                          className={`w-full md:w-48 px-6 py-3 rounded-lg font-semibold text-white transition-colors ${
+                          className={`w-full md:w-48 px-6 py-3 rounded-lg font-semibold text-white transition-all duration-300 ${
                             !selectedTone || responseMutation.isPending
-                              ? "bg-gray-400 cursor-not-allowed"
-                              : "bg-blue-600 hover:bg-blue-700"
+                              ? "bg-gray-600/50 cursor-not-allowed border border-gray-500/30"
+                              : "bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-400 hover:to-blue-400 neon-glow-cyan-strong hover-neon-glow border border-cyan-400/50"
                           }`}
                         >
                           {responseMutation.isPending ? "Generating..." : "Generate Response"}

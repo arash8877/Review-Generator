@@ -65,16 +65,16 @@ export function ResponseViewer({
 
   return (
     <div className="space-y-4">
-      <h2 className="text-2xl font-bold text-gray-800">Generated Response</h2>
+      <h2 className="text-2xl font-bold text-cyan-200">Generated Response</h2>
 
       {response.keyConcerns && response.keyConcerns.length > 0 && (
-        <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-          <h3 className="text-sm font-semibold text-blue-900 mb-2">
+        <div className="glass-card border border-cyan-400/30 rounded-xl p-4 neon-glow-cyan">
+          <h3 className="text-sm font-semibold text-cyan-300 mb-2">
             Key Concerns Addressed:
           </h3>
           <ul className="list-disc list-inside space-y-1">
             {response.keyConcerns.map((concern, index) => (
-              <li key={index} className="text-sm text-blue-800">
+              <li key={index} className="text-sm text-cyan-100">
                 {concern}
               </li>
             ))}
@@ -82,16 +82,16 @@ export function ResponseViewer({
         </div>
       )}
 
-      <div className="bg-white border border-gray-200 rounded-lg p-4">
+      <div className="glass border border-cyan-400/20 rounded-xl p-4">
         {isEditing ? (
           <textarea
             value={editedText}
             onChange={(e) => setEditedText(e.target.value)}
-            className="w-full min-h-[200px] px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 resize-y"
+            className="w-full min-h-[200px] px-4 py-2 border border-cyan-400/30 rounded-lg focus:ring-2 focus:ring-cyan-400 focus:border-cyan-400 resize-y transition-all bg-white/5 text-cyan-100 backdrop-blur-sm"
             placeholder="Edit the response..."
           />
         ) : (
-          <div className="whitespace-pre-wrap text-gray-700 min-h-[100px]">
+          <div className="whitespace-pre-wrap text-cyan-50 min-h-[100px]">
             {displayText}
           </div>
         )}
@@ -102,7 +102,7 @@ export function ResponseViewer({
           <>
             <button
               onClick={handleSaveEdit}
-              className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
+              className="px-4 py-2 bg-gradient-to-r from-cyan-500 to-blue-500 text-white rounded-lg hover:from-cyan-400 hover:to-blue-400 transition-all duration-300 neon-glow-cyan"
             >
               Save Changes
             </button>
@@ -117,19 +117,19 @@ export function ResponseViewer({
           <>
             <button
               onClick={handleRegenerateClick}
-              className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+              className="px-4 py-2 bg-gradient-to-r from-cyan-500 to-blue-500 text-white rounded-lg hover:from-cyan-400 hover:to-blue-400 transition-all duration-300 neon-glow-cyan hover-neon-glow"
             >
               Regenerate
             </button>
             <button
               onClick={handleEdit}
-              className="px-4 py-2 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700 transition-colors"
+              className="px-4 py-2 bg-gradient-to-r from-pink-500 to-purple-500 text-white rounded-lg hover:from-pink-400 hover:to-purple-400 transition-all duration-300 neon-glow-magenta"
             >
               Edit Manually
             </button>
             <button
               onClick={onAccept}
-              className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
+              className="px-4 py-2 bg-gradient-to-r from-emerald-500 to-teal-500 text-white rounded-lg hover:from-emerald-400 hover:to-teal-400 transition-all duration-300 neon-glow-blue"
             >
               Accept
             </button>

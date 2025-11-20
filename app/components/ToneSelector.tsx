@@ -19,8 +19,7 @@ export function ToneSelector({
     <div className="space-y-2">
       <label
         htmlFor="tone-select"
-        className="block text-sm font-medium text-gray-700"
-      >
+        className="block text-sm font-medium text-cyan-200">
         Select Response Tone
       </label>
       <select
@@ -28,10 +27,10 @@ export function ToneSelector({
         value={selectedTone || ""}
         onChange={(e) => onSelectTone(e.target.value as Tone)}
         disabled={disabled}
-        className={`w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
+        className={`w-full px-4 py-2 border border-cyan-400/30 rounded-lg focus:ring-2 focus:ring-cyan-400 focus:border-cyan-400 transition-all backdrop-blur-sm ${
           disabled
-            ? "bg-gray-100 cursor-not-allowed text-gray-500"
-            : "bg-white text-gray-900"
+            ? "bg-gray-600/30 cursor-not-allowed text-gray-400"
+            : "bg-white/5 text-cyan-100 hover:border-cyan-400/50"
         }`}
       >
         <option value="">Choose a tone...</option>

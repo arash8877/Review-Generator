@@ -37,27 +37,27 @@ export function ReviewSelector({
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between gap-2">
-        <h2 className="text-xl font-semibold text-gray-900">Reviews</h2>
-        <p className="text-xs text-gray-500 uppercase tracking-wide">
+        <h2 className="text-xl font-semibold text-cyan-200">Reviews</h2>
+        <p className="text-xs text-cyan-300/70 uppercase tracking-wide">
           {reviews.length} items
         </p>
       </div>
 
       <div className="space-y-4">
         {/* Filter Section */}
-        <div className="bg-gray-50 rounded-lg p-3 border border-gray-200">
-          <p className="text-xs font-semibold text-gray-700 uppercase tracking-wide mb-3">Filters</p>
+        <div className="glass rounded-xl p-3 border border-cyan-400/20">
+          <p className="text-xs font-semibold text-cyan-300 uppercase tracking-wide mb-3">Filters</p>
           
           {/* Status & Sentiment Dropdown */}
           <div className="space-y-2 mb-3">
-            <label htmlFor="status-filter" className="text-[10px] font-medium text-gray-500 uppercase tracking-wide block">
+            <label htmlFor="status-filter" className="text-[10px] font-medium text-cyan-200/80 uppercase tracking-wide block">
               Status & Sentiment
             </label>
             <select
               id="status-filter"
               value={filters.status}
               onChange={(e) => onFiltersChange({ ...filters, status: e.target.value as StatusFilter })}
-              className="w-full px-3 py-2 text-sm border border-gray-300 rounded-md bg-white text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full px-3 py-2 text-sm border border-cyan-400/30 rounded-md bg-white/5 text-cyan-100 focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:border-transparent backdrop-blur-sm"
             >
               <option value="all">All Reviews</option>
               <option value="answered">Answered</option>
@@ -69,14 +69,14 @@ export function ReviewSelector({
 
           {/* Product Model Dropdown */}
           <div className="space-y-2">
-            <label htmlFor="product-filter" className="text-[10px] font-medium text-gray-500 uppercase tracking-wide block">
+            <label htmlFor="product-filter" className="text-[10px] font-medium text-cyan-200/80 uppercase tracking-wide block">
               Product Model
             </label>
             <select
               id="product-filter"
               value={filters.productModel}
               onChange={(e) => onFiltersChange({ ...filters, productModel: e.target.value as ProductModelFilter })}
-              className="w-full px-3 py-2 text-sm border border-gray-300 rounded-md bg-white text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full px-3 py-2 text-sm border border-cyan-400/30 rounded-md bg-white/5 text-cyan-100 focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:border-transparent backdrop-blur-sm"
             >
               <option value="all">All Models</option>
               <option value="model-1">TV-Model 1</option>
@@ -96,33 +96,33 @@ export function ReviewSelector({
               key={review.id}
               type="button"
               onClick={() => onSelectReview(review.id)}
-              className={`w-full rounded-xl border p-4 text-left transition-all ${
+              className={`w-full rounded-xl border p-4 text-left transition-all duration-300 ${
                 isSelected
-                  ? "border-blue-500 bg-blue-50 shadow-md"
-                  : "border-gray-200 bg-white hover:border-gray-300"
+                  ? "glass-strong border-cyan-400/50 neon-glow-cyan-strong"
+                  : "glass border-white/10 hover:border-cyan-400/30 hover:neon-glow-cyan"
               }`}
             >
                 <div className="flex items-center justify-between mb-2">
-                  <span className="text-sm font-medium text-gray-900">
+                  <span className="text-sm font-medium text-cyan-100">
                     {review.customerName}
                   </span>
-                  <span className="text-yellow-500 text-xs">
+                  <span className="text-yellow-400 text-xs">
                     {getRatingStars(review.rating)}
                   </span>
                 </div>
                 <div className="flex items-center justify-between mb-2">
                   <div>
                     {review.answered && (
-                      <span className="px-2 py-0.5 text-[10px] font-semibold rounded border bg-blue-100 text-blue-800 border-blue-300">
+                      <span className="px-2 py-0.5 text-[10px] font-semibold rounded border bg-cyan-500/20 text-cyan-300 border-cyan-400/30 neon-border-cyan">
                         Answered
                       </span>
                     )}
                   </div>
-                  <span className="px-2 py-0.5 text-[10px] font-semibold rounded border bg-purple-100 text-purple-800 border-purple-300">
+                  <span className="px-2 py-0.5 text-[10px] font-semibold rounded border bg-purple-500/20 text-purple-300 border-purple-400/30 neon-border-magenta">
                     {review.productModel}
                   </span>
                 </div>
-                <p className="text-sm text-gray-600 line-clamp-2">
+                <p className="text-sm text-cyan-100/80 line-clamp-2">
                   {review.text}
                 </p>
             </button>
