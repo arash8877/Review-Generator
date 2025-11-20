@@ -75,29 +75,29 @@ export function ReviewSelector({
                   : "border-gray-200 bg-white hover:border-gray-300"
               }`}
             >
-                <div className="flex items-center justify-between mb-1">
+                <div className="flex items-center justify-between mb-2">
                   <span className="text-sm font-medium text-gray-900">
                     {review.customerName}
                   </span>
-                  <div className="flex flex-col items-end gap-1">
-                    <span className="text-yellow-500 text-xs">
-                      {getRatingStars(review.rating)}
-                    </span>
-                    <span
-                      className={`px-2 py-0.5 text-[10px] font-semibold rounded border ${getSentimentColor(
-                        review.sentiment
-                      )}`}
-                    >
-                      {review.sentiment}
-                    </span>
-                  </div>
+                  <span className="text-yellow-500 text-xs">
+                    {getRatingStars(review.rating)}
+                  </span>
                 </div>
-                <div className="flex items-center gap-2 mb-2">
-                  {review.answered && (
-                    <span className="px-2 py-0.5 text-[10px] font-semibold rounded border bg-blue-100 text-blue-800 border-blue-300">
-                      Answered
-                    </span>
-                  )}
+                <div className="flex items-center justify-between mb-2">
+                  <div className="flex gap-2">
+                    {review.answered && (
+                      <span className="px-2 py-0.5 text-[10px] font-semibold rounded border bg-blue-100 text-blue-800 border-blue-300">
+                        Answered
+                      </span>
+                    )}
+                  </div>
+                  <span
+                    className={`px-2 py-0.5 text-[10px] font-semibold rounded border ${getSentimentColor(
+                      review.sentiment
+                    )}`}
+                  >
+                    {review.sentiment}
+                  </span>
                 </div>
                 <p className="text-sm text-gray-600 line-clamp-2">
                   {review.text}
