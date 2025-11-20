@@ -6,8 +6,9 @@ import { ReviewSelector } from "./components/ReviewSelector";
 import { ToneSelector } from "./components/ToneSelector";
 import { ResponseViewer } from "./components/ResponseViewer";
 import { LoadingSpinner } from "./components/LoadingSpinner";
+import { SummaryViewer } from "./components/SummaryViewer";
 import { reviews } from "./lib/reviews";
-import { Tone, Response, FilterType } from "./lib/types";
+import { Tone, Response, FilterType, SummaryResponse } from "./lib/types";
 import { toast } from "sonner";
 
 async function generateResponse(
@@ -35,14 +36,30 @@ async function generateResponse(
   return response.json();
 }
 
+async function generateSummary(): Promise<SummaryResponse> {
+  const response = await fetch("/api/generate-summary", {
+    method: "POST",
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to generate summary");
+  }
+
+  return response.json();
+}
+
 export default function Home() {
   const [reviewsState, setReviewsState] = useState(reviews);
   const [filter, setFilter] = useState<FilterType>("all");
   const [selectedReviewId, setSelectedReviewId] = useState<string | null>(null);
   const [selectedTone, setSelectedTone] = useState<Tone | null>(null);
   const [generatedResponse, setGeneratedResponse] = useState<Response | null>(null);
+  
+  // New state for tabs and summary
+  const [activeTab, setActiveTab] = useState<"response" | "summary">("response");
+  const [summaryData, setSummaryData] = useState<SummaryResponse | null>(null);
 
-  const mutation = useMutation({
+  const responseMutation = useMutation({
     mutationFn: ({
       reviewId,
       tone,
@@ -63,11 +80,24 @@ export default function Home() {
     },
   });
 
+  const summaryMutation = useMutation({
+    mutationFn: generateSummary,
+    onSuccess: (data) => {
+      setSummaryData(data);
+    },
+    onError: (error) => {
+      console.error("Error generating summary:", error);
+      toast.error("Failed to generate summary. Please try again.");
+    },
+  });
+
   const handleSelectReview = (reviewId: string) => {
     setSelectedReviewId(reviewId);
     setSelectedTone(null);
     setGeneratedResponse(null);
-    mutation.reset();
+    responseMutation.reset();
+    // Switch to response tab when a review is selected
+    setActiveTab("response");
   };
 
   const handleGenerate = () => {
@@ -76,7 +106,7 @@ export default function Home() {
       return;
     }
 
-    mutation.mutate({
+    responseMutation.mutate({
       reviewId: selectedReviewId,
       tone: selectedTone,
       requestId: crypto.randomUUID(),
@@ -88,7 +118,7 @@ export default function Home() {
     if (!selectedReviewId || !selectedTone) {
       return;
     }
-    mutation.mutate({
+    responseMutation.mutate({
       reviewId: selectedReviewId,
       tone: selectedTone,
       requestId: crypto.randomUUID(),
@@ -143,93 +173,129 @@ export default function Home() {
           </section>
 
           {/* Workspace Panel */}
-          <section className="bg-white rounded-lg shadow-md p-6 space-y-6">
-            {!selectedReview && (
-              <div className="flex flex-col items-center justify-center text-center text-gray-500 min-h-[300px] space-y-3">
-                <p className="text-xl font-semibold text-gray-700">Pick a review to get started</p>
-                <p className="max-w-md">
-                  Choose any review from the list to view its details, select a tone, and generate
-                  an AI-assisted draft response.
-                </p>
-              </div>
-            )}
+          <section className="bg-white rounded-lg shadow-md overflow-hidden min-h-[600px]">
+            {/* Tabs */}
+            <div className="flex border-b border-gray-200">
+              <button
+                onClick={() => setActiveTab("response")}
+                className={`flex-1 py-4 text-sm font-medium text-center border-b-2 transition-colors ${
+                  activeTab === "response"
+                    ? "border-blue-600 text-blue-600"
+                    : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
+                }`}
+              >
+                Review Response
+              </button>
+              <button
+                onClick={() => setActiveTab("summary")}
+                className={`flex-1 py-4 text-sm font-medium text-center border-b-2 transition-colors ${
+                  activeTab === "summary"
+                    ? "border-blue-600 text-blue-600"
+                    : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
+                }`}
+              >
+                Summary & Insights
+              </button>
+            </div>
 
-            {selectedReview && (
-              <>
-                <div className="space-y-3">
-                  <p className="text-sm font-semibold text-gray-500 uppercase tracking-wide">
-                    Selected review
-                  </p>
-                  <div className="rounded-lg border border-gray-200 p-4 bg-gray-50 space-y-2">
-                    <div className="flex items-center justify-between gap-3 mb-2">
-                      <div className="flex items-center gap-3">
-                        <span className="text-sm font-medium text-gray-900">
-                          {selectedReview.customerName}
-                        </span>
-                        <span className="text-yellow-500 text-sm">
-                          {"★".repeat(selectedReview.rating) +
-                            "☆".repeat(5 - selectedReview.rating)}
-                        </span>
+            <div className="p-6">
+              {activeTab === "response" ? (
+                <div className="space-y-6">
+                  {!selectedReview && (
+                    <div className="flex flex-col items-center justify-center text-center text-gray-500 min-h-[300px] space-y-3">
+                      <p className="text-xl font-semibold text-gray-700">Pick a review to get started</p>
+                      <p className="max-w-md">
+                        Choose any review from the list to view its details, select a tone, and generate
+                        an AI-assisted draft response.
+                      </p>
+                    </div>
+                  )}
+
+                  {selectedReview && (
+                    <>
+                      <div className="space-y-3">
+                        <p className="text-sm font-semibold text-gray-500 uppercase tracking-wide">
+                          Selected review
+                        </p>
+                        <div className="rounded-lg border border-gray-200 p-4 bg-gray-50 space-y-2">
+                          <div className="flex items-center justify-between gap-3 mb-2">
+                            <div className="flex items-center gap-3">
+                              <span className="text-sm font-medium text-gray-900">
+                                {selectedReview.customerName}
+                              </span>
+                              <span className="text-yellow-500 text-sm">
+                                {"★".repeat(selectedReview.rating) +
+                                  "☆".repeat(5 - selectedReview.rating)}
+                              </span>
+                            </div>
+                            <div className="flex items-center gap-2">
+                              {selectedReview.answered && (
+                                <span className="px-2 py-1 text-xs font-semibold rounded bg-blue-100 text-blue-800 border border-blue-200">
+                                  Answered
+                                </span>
+                              )}
+                              <span
+                                className={`text-xs font-semibold uppercase px-2 py-1 rounded ${
+                                  selectedReview.sentiment === "positive"
+                                    ? "bg-green-100 text-green-700"
+                                    : selectedReview.sentiment === "negative"
+                                    ? "bg-red-100 text-red-700"
+                                    : "bg-yellow-100 text-yellow-700"
+                                }`}
+                              >
+                                {selectedReview.sentiment}
+                              </span>
+                              <span className="text-xs text-gray-500">#{selectedReview.id}</span>
+                            </div>
+                          </div>
+                          <p className="text-gray-800 leading-relaxed">{selectedReview.text}</p>
+                        </div>
                       </div>
-                      <div className="flex items-center gap-2">
-                        {selectedReview.answered && (
-                          <span className="px-2 py-1 text-xs font-semibold rounded bg-blue-100 text-blue-800 border border-blue-200">
-                            Answered
-                          </span>
-                        )}
-                        <span
-                          className={`text-xs font-semibold uppercase px-2 py-1 rounded ${
-                            selectedReview.sentiment === "positive"
-                              ? "bg-green-100 text-green-700"
-                              : selectedReview.sentiment === "negative"
-                              ? "bg-red-100 text-red-700"
-                              : "bg-yellow-100 text-yellow-700"
+
+                      <div className="grid gap-4 md:grid-cols-[1fr,auto] items-end">
+                        <ToneSelector
+                          selectedTone={selectedTone}
+                          onSelectTone={setSelectedTone}
+                          disabled={!selectedReview}
+                        />
+                        <button
+                          onClick={handleGenerate}
+                          disabled={!selectedTone || responseMutation.isPending}
+                          className={`w-full md:w-48 px-6 py-3 rounded-lg font-semibold text-white transition-colors ${
+                            !selectedTone || responseMutation.isPending
+                              ? "bg-gray-400 cursor-not-allowed"
+                              : "bg-blue-600 hover:bg-blue-700"
                           }`}
                         >
-                          {selectedReview.sentiment}
-                        </span>
-                        <span className="text-xs text-gray-500">#{selectedReview.id}</span>
+                          {responseMutation.isPending ? "Generating..." : "Generate Response"}
+                        </button>
                       </div>
-                    </div>
-                    <p className="text-gray-800 leading-relaxed">{selectedReview.text}</p>
-                  </div>
+
+                      {responseMutation.isPending && (
+                        <div className="border border-gray-200 rounded-lg">
+                          <LoadingSpinner />
+                        </div>
+                      )}
+
+                      {generatedResponse && !responseMutation.isPending && (
+                        <ResponseViewer
+                          response={generatedResponse}
+                          onRegenerate={handleRegenerate}
+                          onAccept={handleAccept}
+                          isGenerating={responseMutation.isPending}
+                        />
+                      )}
+                    </>
+                  )}
                 </div>
-
-                <div className="grid gap-4 md:grid-cols-[1fr,auto] items-end">
-                  <ToneSelector
-                    selectedTone={selectedTone}
-                    onSelectTone={setSelectedTone}
-                    disabled={!selectedReview}
-                  />
-                  <button
-                    onClick={handleGenerate}
-                    disabled={!selectedTone || mutation.isPending}
-                    className={`w-full md:w-48 px-6 py-3 rounded-lg font-semibold text-white transition-colors ${
-                      !selectedTone || mutation.isPending
-                        ? "bg-gray-400 cursor-not-allowed"
-                        : "bg-blue-600 hover:bg-blue-700"
-                    }`}
-                  >
-                    {mutation.isPending ? "Generating..." : "Generate Response"}
-                  </button>
-                </div>
-
-                {mutation.isPending && (
-                  <div className="border border-gray-200 rounded-lg">
-                    <LoadingSpinner />
-                  </div>
-                )}
-
-                {generatedResponse && !mutation.isPending && (
-                  <ResponseViewer
-                    response={generatedResponse}
-                    onRegenerate={handleRegenerate}
-                    onAccept={handleAccept}
-                    isGenerating={mutation.isPending}
-                  />
-                )}
-              </>
-            )}
+              ) : (
+                <SummaryViewer
+                  data={summaryData!}
+                  isLoading={summaryMutation.isPending}
+                  onGenerate={() => summaryMutation.mutate()}
+                />
+              )}
+            </div>
           </section>
         </div>
       </div>

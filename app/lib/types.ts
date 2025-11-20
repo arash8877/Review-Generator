@@ -23,3 +23,10 @@ export interface Response {
   keyConcerns?: string[];
 }
 
+
+export interface SummaryResponse {
+  summary: string;
+  strengths: string[];
+  weaknesses: string[];
+  recommendations: string[];
+}
