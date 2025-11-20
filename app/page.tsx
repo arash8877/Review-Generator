@@ -8,7 +8,7 @@ import { ResponseViewer } from "./components/ResponseViewer";
 import { LoadingSpinner } from "./components/LoadingSpinner";
 import { SummaryViewer } from "./components/SummaryViewer";
 import { reviews } from "./lib/reviews";
-import { Tone, Response, Filters, SummaryResponse } from "./lib/types";
+import { Tone, Response, Filters, SummaryResponse, ProductModelFilter } from "./lib/types";
 import { toast } from "sonner";
 
 async function generateResponse(
@@ -62,6 +62,8 @@ export default function Home() {
   // New state for tabs and summary
   const [activeTab, setActiveTab] = useState<"response" | "summary">("response");
   const [summaryData, setSummaryData] = useState<SummaryResponse | null>(null);
+  const [selectedSummaryProduct, setSelectedSummaryProduct] = useState<ProductModelFilter>("all");
+  const [generatedForProduct, setGeneratedForProduct] = useState<ProductModelFilter | null>(null);
 
   const responseMutation = useMutation({
     mutationFn: ({
@@ -88,6 +90,8 @@ export default function Home() {
     mutationFn: (productModel?: string) => generateSummary(productModel),
     onSuccess: (data) => {
       setSummaryData(data);
+      // Track which product this summary was generated for
+      setGeneratedForProduct(selectedSummaryProduct);
     },
     onError: (error) => {
       console.error("Error generating summary:", error);
@@ -298,13 +302,16 @@ export default function Home() {
                 <SummaryViewer
                   data={summaryData!}
                   isLoading={summaryMutation.isPending}
+                  selectedProduct={selectedSummaryProduct}
+                  onProductChange={setSelectedSummaryProduct}
+                  generatedForProduct={generatedForProduct}
                   onGenerate={() => {
-                    // Determine product model based on current filter
+                    // Determine product model based on selected product in Summary tab
                     let productModel: string | undefined;
-                    if (filters.productModel === "model-1") productModel = "TV-Model 1";
-                    else if (filters.productModel === "model-2") productModel = "TV-Model 2";
-                    else if (filters.productModel === "model-3") productModel = "TV-Model 3";
-                    else if (filters.productModel === "model-4") productModel = "TV-Model 4";
+                    if (selectedSummaryProduct === "model-1") productModel = "TV-Model 1";
+                    else if (selectedSummaryProduct === "model-2") productModel = "TV-Model 2";
+                    else if (selectedSummaryProduct === "model-3") productModel = "TV-Model 3";
+                    else if (selectedSummaryProduct === "model-4") productModel = "TV-Model 4";
                     summaryMutation.mutate(productModel);
                   }}
                 />
