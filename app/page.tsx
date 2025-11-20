@@ -36,9 +36,13 @@ async function generateResponse(
   return response.json();
 }
 
-async function generateSummary(): Promise<SummaryResponse> {
+async function generateSummary(productModel?: string): Promise<SummaryResponse> {
   const response = await fetch("/api/generate-summary", {
     method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ productModel }),
   });
 
   if (!response.ok) {
@@ -81,7 +85,7 @@ export default function Home() {
   });
 
   const summaryMutation = useMutation({
-    mutationFn: generateSummary,
+    mutationFn: (productModel?: string) => generateSummary(productModel),
     onSuccess: (data) => {
       setSummaryData(data);
     },
@@ -150,6 +154,10 @@ export default function Home() {
     if (filter === "positive") return review.sentiment === "positive";
     if (filter === "negative") return review.sentiment === "negative";
     if (filter === "neutral") return review.sentiment === "neutral";
+    if (filter === "model-1") return review.productModel === "TV-Model 1";
+    if (filter === "model-2") return review.productModel === "TV-Model 2";
+    if (filter === "model-3") return review.productModel === "TV-Model 3";
+    if (filter === "model-4") return review.productModel === "TV-Model 4";
     return true;
   });
 
@@ -234,6 +242,9 @@ export default function Home() {
                                   Answered
                                 </span>
                               )}
+                              <span className="px-2 py-1 text-xs font-semibold rounded bg-purple-100 text-purple-800 border border-purple-200">
+                                {selectedReview.productModel}
+                              </span>
                               <span
                                 className={`text-xs font-semibold uppercase px-2 py-1 rounded ${
                                   selectedReview.sentiment === "positive"
@@ -292,7 +303,15 @@ export default function Home() {
                 <SummaryViewer
                   data={summaryData!}
                   isLoading={summaryMutation.isPending}
-                  onGenerate={() => summaryMutation.mutate()}
+                  onGenerate={() => {
+                    // Determine product model based on current filter
+                    let productModel: string | undefined;
+                    if (filter === "model-1") productModel = "TV-Model 1";
+                    else if (filter === "model-2") productModel = "TV-Model 2";
+                    else if (filter === "model-3") productModel = "TV-Model 3";
+                    else if (filter === "model-4") productModel = "TV-Model 4";
+                    summaryMutation.mutate(productModel);
+                  }}
                 />
               )}
             </div>

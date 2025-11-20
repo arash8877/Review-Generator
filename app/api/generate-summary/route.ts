@@ -1,16 +1,16 @@
 import { NextResponse } from "next/server";
 import { reviews } from "@/app/lib/reviews";
-import { SummaryResponse } from "@/app/lib/types";
+import { SummaryResponse, ProductModel } from "@/app/lib/types";
 
 const GEMINI_ENDPOINT =
   "https://generativelanguage.googleapis.com/v1/models/gemini-2.5-flash:generateContent";
 
-async function callGeminiForSummary(allReviewsText: string): Promise<SummaryResponse> {
+async function callGeminiForSummary(allReviewsText: string, productContext: string): Promise<SummaryResponse> {
   const apiKey = process.env.GEMINI_API_KEY;
   if (!apiKey) throw new Error("Missing GEMINI_API_KEY");
 
   const prompt = `
-You are an expert business analyst. Analyze the following customer reviews for DanTV.
+You are an expert business analyst. Analyze the following customer reviews for DanTV ${productContext}.
 
 Reviews:
 """
@@ -71,13 +71,25 @@ Strictly return ONLY a valid, raw JSON object (no markdown, no surrounding backt
   }
 }
 
-export async function POST() {
+export async function POST(request: Request) {
   try {
-    const allReviewsText = reviews
+    const body = await request.json().catch(() => ({}));
+    const productModel = body.productModel as ProductModel | undefined;
+
+    // Filter reviews by product model if specified
+    const filteredReviews = productModel
+      ? reviews.filter((r) => r.productModel === productModel)
+      : reviews;
+
+    const allReviewsText = filteredReviews
       .map((r) => `Review (Rating: ${r.rating}/5): ${r.text}`)
       .join("\n\n");
 
-    const summaryData = await callGeminiForSummary(allReviewsText);
+    const productContext = productModel
+      ? `- ${productModel}`
+      : "across all product models";
+
+    const summaryData = await callGeminiForSummary(allReviewsText, productContext);
     return NextResponse.json(summaryData);
   } catch (err) {
     console.error("Summary generation failed:", err);

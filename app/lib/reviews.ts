@@ -7,6 +7,7 @@ export const reviews: Review[] = [
     rating: 5,
     sentiment: "positive",
     customerName: "Sarah Jenkins",
+    productModel: "TV-Model 1",
   },
   {
     id: "2",
@@ -14,6 +15,7 @@ export const reviews: Review[] = [
     rating: 1,
     sentiment: "negative",
     customerName: "Mike Thompson",
+    productModel: "TV-Model 2",
   },
   {
     id: "3",
@@ -21,6 +23,7 @@ export const reviews: Review[] = [
     rating: 3,
     sentiment: "neutral",
     customerName: "Emily Chen",
+    productModel: "TV-Model 3",
   },
   {
     id: "4",
@@ -28,6 +31,7 @@ export const reviews: Review[] = [
     rating: 2,
     sentiment: "negative",
     customerName: "David Wilson",
+    productModel: "TV-Model 4",
   },
   {
     id: "5",
@@ -35,6 +39,7 @@ export const reviews: Review[] = [
     rating: 5,
     sentiment: "positive",
     customerName: "Jessica Martinez",
+    productModel: "TV-Model 1",
   },
   {
     id: "6",
@@ -42,6 +47,7 @@ export const reviews: Review[] = [
     rating: 3,
     sentiment: "neutral",
     customerName: "Robert Taylor",
+    productModel: "TV-Model 2",
   },
   {
     id: "7",
@@ -49,6 +55,7 @@ export const reviews: Review[] = [
     rating: 1,
     sentiment: "negative",
     customerName: "Lisa Anderson",
+    productModel: "TV-Model 3",
   },
   {
     id: "8",
@@ -56,6 +63,7 @@ export const reviews: Review[] = [
     rating: 5,
     sentiment: "positive",
     customerName: "Kevin White",
+    productModel: "TV-Model 4",
   },
   {
     id: "9",
@@ -63,6 +71,7 @@ export const reviews: Review[] = [
     rating: 3,
     sentiment: "neutral",
     customerName: "Amanda Thomas",
+    productModel: "TV-Model 1",
   },
   {
     id: "10",
@@ -70,6 +79,7 @@ export const reviews: Review[] = [
     rating: 5,
     sentiment: "positive",
     customerName: "Chris Garcia",
+    productModel: "TV-Model 2",
   },
   {
     id: "11",
@@ -77,6 +87,7 @@ export const reviews: Review[] = [
     rating: 2,
     sentiment: "negative",
     customerName: "Patricia Robinson",
+    productModel: "TV-Model 3",
   },
   {
     id: "12",
@@ -84,6 +95,7 @@ export const reviews: Review[] = [
     rating: 4,
     sentiment: "positive",
     customerName: "Daniel Lee",
+    productModel: "TV-Model 4",
   },
   {
     id: "13",
@@ -91,6 +103,7 @@ export const reviews: Review[] = [
     rating: 2,
     sentiment: "negative",
     customerName: "Jennifer Clark",
+    productModel: "TV-Model 1",
   },
   {
     id: "14",
@@ -98,6 +111,7 @@ export const reviews: Review[] = [
     rating: 4,
     sentiment: "positive",
     customerName: "Brian Lewis",
+    productModel: "TV-Model 2",
   },
   {
     id: "15",
@@ -105,6 +119,7 @@ export const reviews: Review[] = [
     rating: 3,
     sentiment: "neutral",
     customerName: "Megan Walker",
+    productModel: "TV-Model 3",
   },
 ];
 

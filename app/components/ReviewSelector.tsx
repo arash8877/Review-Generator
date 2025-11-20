@@ -43,22 +43,51 @@ export function ReviewSelector({
         </p>
       </div>
 
-      <div className="flex flex-wrap gap-2">
-        {(["all", "answered", "positive", "negative", "neutral"] as FilterType[]).map(
-          (f) => (
-            <button
-              key={f}
-              onClick={() => onFilterChange(f)}
-              className={`px-3 py-1 text-xs font-medium rounded-full capitalize transition-colors ${
-                filter === f
-                  ? "bg-blue-600 text-white"
-                  : "bg-gray-100 text-gray-600 hover:bg-gray-200"
-              }`}
-            >
-              {f}
-            </button>
-          )
-        )}
+      <div className="space-y-3">
+        <div className="space-y-2">
+          <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Status & Sentiment</p>
+          <div className="flex flex-wrap gap-2">
+            {(["all", "answered", "positive", "negative", "neutral"] as FilterType[]).map(
+              (f) => (
+                <button
+                  key={f}
+                  onClick={() => onFilterChange(f)}
+                  className={`px-3 py-1 text-xs font-medium rounded-full capitalize transition-colors ${
+                    filter === f
+                      ? "bg-blue-600 text-white"
+                      : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+                  }`}
+                >
+                  {f}
+                </button>
+              )
+            )}
+          </div>
+        </div>
+
+        <div className="space-y-2">
+          <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Product Model</p>
+          <div className="flex flex-wrap gap-2">
+            {(["model-1", "model-2", "model-3", "model-4"] as FilterType[]).map(
+              (f) => {
+                const modelNumber = f.split("-")[1];
+                return (
+                  <button
+                    key={f}
+                    onClick={() => onFilterChange(f)}
+                    className={`px-3 py-1 text-xs font-medium rounded-full transition-colors ${
+                      filter === f
+                        ? "bg-blue-600 text-white"
+                        : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+                    }`}
+                  >
+                    Model {modelNumber}
+                  </button>
+                );
+              }
+            )}
+          </div>
+        </div>
       </div>
 
       <div className="space-y-3 max-h-[70vh] overflow-y-auto pr-1 custom-scroll">
@@ -90,6 +119,9 @@ export function ReviewSelector({
                         Answered
                       </span>
                     )}
+                    <span className="px-2 py-0.5 text-[10px] font-semibold rounded border bg-purple-100 text-purple-800 border-purple-300">
+                      {review.productModel}
+                    </span>
                   </div>
                   <span
                     className={`px-2 py-0.5 text-[10px] font-semibold rounded border ${getSentimentColor(
