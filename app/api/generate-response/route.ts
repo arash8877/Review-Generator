@@ -4,7 +4,7 @@ import { reviews } from "@/app/lib/reviews";
 import { Tone, Response } from "@/app/lib/types";
 
 const GEMINI_ENDPOINT =
-  "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent";
+  "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent";
 
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -78,22 +78,16 @@ async function callGemini(
           role: "user",
           parts: [
             {
-              text: buildPrompt(
-                reviewText,
-                tone,
-                requestId,
-                previousResponse,
-                variationSeed
-              ),
+              text: buildPrompt(reviewText, tone, requestId, previousResponse, variationSeed),
             },
           ],
         },
       ],
       generationConfig: {
         temperature: 1.3,
-        topK: 64,
-        topP: 0.95,
-        responseMimeType: "application/json",
+        top_k: 64,
+        top_p: 0.95,
+        response_mime_type: "application/json",
       },
     }),
   });
@@ -104,8 +98,7 @@ async function callGemini(
   }
 
   const data = await response.json();
-  const jsonPayload =
-    data.candidates?.[0]?.content?.parts?.[0]?.text ?? "{}";
+  const jsonPayload = data.candidates?.[0]?.content?.parts?.[0]?.text ?? "{}";
 
   try {
     const parsed = JSON.parse(jsonPayload);
@@ -164,34 +157,28 @@ export async function POST(request: NextRequest) {
       previousResponse?: string;
     };
 
-    console.log("API Request:", { reviewId, tone, requestId, hasPreviousResponse: !!previousResponse });
+    console.log("API Request:", {
+      reviewId,
+      tone,
+      requestId,
+      hasPreviousResponse: !!previousResponse,
+    });
     if (previousResponse) {
-        console.log("Previous response length:", previousResponse.length);
-        console.log("Previous response preview:", previousResponse.substring(0, 50));
+      console.log("Previous response length:", previousResponse.length);
+      console.log("Previous response preview:", previousResponse.substring(0, 50));
     }
 
     if (!reviewId || !tone) {
-      return NextResponse.json(
-        { error: "Missing reviewId or tone" },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: "Missing reviewId or tone" }, { status: 400 });
     }
 
     const review = reviews.find((r) => r.id === reviewId);
     if (!review) {
-      return NextResponse.json(
-        { error: "Review not found" },
-        { status: 404 }
-      );
+      return NextResponse.json({ error: "Review not found" }, { status: 404 });
     }
 
     try {
-      const aiResponse = await callGemini(
-        review.text,
-        tone,
-        requestId,
-        previousResponse
-      );
+      const aiResponse = await callGemini(review.text, tone, requestId, previousResponse);
       return NextResponse.json(aiResponse);
     } catch (error) {
       console.error("Gemini call failed, falling back to template:", error);
@@ -200,10 +187,6 @@ export async function POST(request: NextRequest) {
     }
   } catch (error) {
     console.error("Unexpected error while generating response:", error);
-    return NextResponse.json(
-      { error: "Internal server error" },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
   }
 }
-
