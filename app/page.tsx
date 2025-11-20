@@ -159,30 +159,35 @@ export default function Home() {
                     Selected review
                   </p>
                   <div className="rounded-lg border border-gray-200 p-4 bg-gray-50 space-y-2">
-                    <div className="flex flex-wrap items-center gap-3">
-                      <span className="text-sm font-medium text-gray-900">
-                        {selectedReview.customerName}
-                      </span>
-                      <span className="text-yellow-500 text-sm">
-                        {"★".repeat(selectedReview.rating) + "☆".repeat(5 - selectedReview.rating)}
-                      </span>
-                      <span
-                        className={`text-xs font-semibold uppercase px-2 py-1 rounded ${
-                          selectedReview.sentiment === "positive"
-                            ? "bg-green-100 text-green-700"
-                            : selectedReview.sentiment === "negative"
-                            ? "bg-red-100 text-red-700"
-                            : "bg-yellow-100 text-yellow-700"
-                        }`}
-                      >
-                        {selectedReview.sentiment}
-                      </span>
-                      {selectedReview.answered && (
-                        <span className="px-2 py-1 text-xs font-semibold rounded bg-blue-100 text-blue-800 border border-blue-200">
-                          Answered
+                    <div className="flex items-center justify-between gap-3 mb-2">
+                      <div className="flex items-center gap-3">
+                        <span className="text-sm font-medium text-gray-900">
+                          {selectedReview.customerName}
                         </span>
-                      )}
-                      <span className="text-xs text-gray-500">#{selectedReview.id}</span>
+                        <span className="text-yellow-500 text-sm">
+                          {"★".repeat(selectedReview.rating) +
+                            "☆".repeat(5 - selectedReview.rating)}
+                        </span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        {selectedReview.answered && (
+                          <span className="px-2 py-1 text-xs font-semibold rounded bg-blue-100 text-blue-800 border border-blue-200">
+                            Answered
+                          </span>
+                        )}
+                        <span
+                          className={`text-xs font-semibold uppercase px-2 py-1 rounded ${
+                            selectedReview.sentiment === "positive"
+                              ? "bg-green-100 text-green-700"
+                              : selectedReview.sentiment === "negative"
+                              ? "bg-red-100 text-red-700"
+                              : "bg-yellow-100 text-yellow-700"
+                          }`}
+                        >
+                          {selectedReview.sentiment}
+                        </span>
+                        <span className="text-xs text-gray-500">#{selectedReview.id}</span>
+                      </div>
                     </div>
                     <p className="text-gray-800 leading-relaxed">{selectedReview.text}</p>
                   </div>
