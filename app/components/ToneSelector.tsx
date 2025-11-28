@@ -1,14 +1,13 @@
 "use client";
 
 import { Tone } from "@/app/lib/types";
+import { toneOptions } from "@/app/lib/constants";
 
 interface ToneSelectorProps {
   selectedTone: Tone | null;
   onSelectTone: (tone: Tone) => void;
   disabled?: boolean;
 }
-
-const tones: Tone[] = ["Friendly", "Formal", "Apologetic", "Neutral/Professional"];
 
 export function ToneSelector({
   selectedTone,
@@ -37,7 +36,7 @@ export function ToneSelector({
         }`}
       >
         <option value="">Choose a tone...</option>
-        {tones.map((tone) => (
+        {toneOptions.map((tone) => (
           <option key={tone} value={tone}>
             {tone}
           </option>
