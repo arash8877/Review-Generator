@@ -112,7 +112,7 @@
   scrollbar-color: #06b6d4 rgba(255, 255, 255, 0.05);
 }
 
-/* Animations */
+/* Enhanced Animations */
 @keyframes neonPulse {
   0%, 100% {
     opacity: 1;
@@ -133,6 +133,51 @@
 @keyframes fadeInGlass {
   from {
     opacity: 0;
+    transform: translateY(10px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.animate-fade-in-glass {
+  animation: fadeInGlass 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.5s ease-out;
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.animate-slide-in-right {
+  animation: slideInRight 0.4s ease-out;
+}
+
+@keyframes staggerFadeIn {
+  from {
+    opacity: 0;
     transform: translateY(10px);
   }
   to {
@@ -141,8 +186,94 @@
   }
 }
 
-.animate-fade-in-glass {
-  animation: fadeInGlass 0.5s ease-out;
+.animate-stagger-fade-in {
+  animation: staggerFadeIn 0.4s ease-out both;
+}
+
+/* Staggered animations for lists */
+.stagger-children > * {
+  animation: staggerFadeIn 0.4s ease-out both;
+}
+
+.stagger-children > *:nth-child(1) { animation-delay: 0.05s; }
+.stagger-children > *:nth-child(2) { animation-delay: 0.1s; }
+.stagger-children > *:nth-child(3) { animation-delay: 0.15s; }
+.stagger-children > *:nth-child(4) { animation-delay: 0.2s; }
+.stagger-children > *:nth-child(5) { animation-delay: 0.25s; }
+.stagger-children > *:nth-child(6) { animation-delay: 0.3s; }
+.stagger-children > *:nth-child(7) { animation-delay: 0.35s; }
+.stagger-children > *:nth-child(8) { animation-delay: 0.4s; }
+
+@keyframes shimmer {
+  0% {
+    background-position: -200px 0;
+  }
+  100% {
+    background-position: calc(200px + 100%) 0;
+  }
+}
+
+.animate-shimmer {
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+  background-size: 200px 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes loadingDots {
+  0%, 20% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.loading-dots span {
+  animation: loadingDots 1.4s infinite ease-in-out both;
+}
+
+.loading-dots span:nth-child(1) { animation-delay: -0.32s; }
+.loading-dots span:nth-child(2) { animation-delay: -0.16s; }
+.loading-dots span:nth-child(3) { animation-delay: 0s; }
+
+@keyframes bounceIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+  70% {
+    transform: scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-bounce-in {
+  animation: bounceIn 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-slide-up {
+  animation: slideUp 0.5s ease-out;
 }
 
 /* Gradient Backgrounds */
@@ -181,5 +312,116 @@
 .btn-secondary:focus, .btn-secondary:hover {
   background: rgba(6,182,212,0.09);
   border-color: var(--neon-cyan);
+}
+
+/* Enhanced Toast Styling */
+.toaster {
+  --normal-bg: linear-gradient(135deg, rgba(24, 34, 54, 0.95) 0%, rgba(30, 41, 59, 0.95) 100%);
+  --normal-border: rgba(6, 182, 212, 0.3);
+  --normal-text: #e0f2fe;
+
+  --success-bg: linear-gradient(135deg, rgba(34, 197, 94, 0.15) 0%, rgba(22, 163, 74, 0.15) 100%);
+  --success-border: rgba(34, 197, 94, 0.5);
+  --success-text: #bbf7d0;
+
+  --error-bg: linear-gradient(135deg, rgba(239, 68, 68, 0.15) 0%, rgba(220, 38, 38, 0.15) 100%);
+  --error-border: rgba(239, 68, 68, 0.5);
+  --error-text: #fecaca;
+}
+
+[data-sonner-toaster] {
+  font-family: inherit;
+}
+
+[data-sonner-toast] {
+  background: var(--normal-bg);
+  border: 1px solid var(--normal-border);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  color: var(--normal-text);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 0 20px rgba(6, 182, 212, 0.1);
+  border-radius: 12px;
+  padding: 16px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+[data-sonner-toast][data-type="success"] {
+  background: var(--success-bg);
+  border-color: var(--success-border);
+  color: var(--success-text);
+  box-shadow: 0 8px 32px rgba(34, 197, 94, 0.2), 0 0 20px rgba(34, 197, 94, 0.1);
+}
+
+[data-sonner-toast][data-type="error"] {
+  background: var(--error-bg);
+  border-color: var(--error-border);
+  color: var(--error-text);
+  box-shadow: 0 8px 32px rgba(239, 68, 68, 0.2), 0 0 20px rgba(239, 68, 68, 0.1);
+}
+
+[data-sonner-toast] [data-description] {
+  color: rgba(255, 255, 255, 0.8);
+  margin-top: 4px;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
+[data-sonner-toast] [data-action] button {
+  background: linear-gradient(135deg, rgba(6, 182, 212, 0.2) 0%, rgba(59, 130, 246, 0.2) 100%);
+  border: 1px solid rgba(6, 182, 212, 0.4);
+  color: #e0f2fe;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+}
+
+[data-sonner-toast] [data-action] button:hover {
+  background: linear-gradient(135deg, rgba(6, 182, 212, 0.3) 0%, rgba(59, 130, 246, 0.3) 100%);
+  border-color: rgba(6, 182, 212, 0.6);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(6, 182, 212, 0.3);
+}
+
+[data-sonner-toast] [data-action] button:active {
+  transform: translateY(0);
+}
+
+[data-sonner-toast] [data-close] {
+  color: rgba(255, 255, 255, 0.6);
+  transition: color 0.2s ease;
+}
+
+[data-sonner-toast] [data-close]:hover {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* Drag and Drop Styles */
+.drop-indicator {
+  background: linear-gradient(90deg, transparent, var(--neon-cyan), transparent);
+  opacity: 0;
+}
+
+.drop-target .drop-indicator {
+  opacity: 1;
+}
+
+/* Drag ghost styling */
+[draggable="true"] {
+  cursor: grab;
+}
+
+[draggable="true"]:active {
+  cursor: grabbing;
+}
+
+/* Smooth drag transitions */
+.dragging {
+  transition: all 0.2s ease;
+  transform: rotate(2deg) scale(1.02);
+  z-index: 1000;
 }
 

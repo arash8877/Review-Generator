@@ -12,6 +12,7 @@ import { ResponseChecklist } from "./components/ResponseChecklist";
 import { reviews } from "./lib/reviews";
 import { Tone, Response, Filters, SummaryResponse, ProductModelFilter } from "./lib/types";
 import { toast } from "sonner";
+import { Review } from "./lib/types";
 
 async function generateResponse(
   reviewId: string,
@@ -72,6 +73,14 @@ export default function Home() {
     setGeneratedForProduct(null);
   };
 
+  const handleReorderReviews = (reorderedReviews: Review[]) => {
+    setReviewsState(reorderedReviews);
+    toast.success("Reviews reordered", {
+      description: "Priority order has been updated",
+      duration: 2000,
+    });
+  };
+
   const responseMutation = useMutation({
     mutationFn: ({
       reviewId,
@@ -89,7 +98,19 @@ export default function Home() {
     },
     onError: (error) => {
       console.error("Error generating response:", error);
-      toast.error("Failed to generate response. Please try again.");
+      toast.error("Failed to generate response", {
+        description: "Please check your connection and try again",
+        action: {
+          label: "Retry",
+          onClick: () => responseMutation.mutate({
+            reviewId: selectedReviewId!,
+            tone: selectedTone!,
+            requestId: crypto.randomUUID(),
+            previousResponse: undefined,
+          }),
+        },
+        duration: 6000,
+      });
     },
   });
 
@@ -117,7 +138,12 @@ export default function Home() {
 
   const handleGenerate = () => {
     if (!selectedReviewId || !selectedTone) {
-      toast.error("Pick a review and tone first.");
+      toast.error("Select a review and tone", {
+        description: !selectedReviewId
+          ? "Choose a customer review from the list to get started"
+          : "Pick a response tone (Friendly, Apologetic, etc.)",
+        duration: 4000,
+      });
       return;
     }
 
@@ -151,8 +177,13 @@ export default function Home() {
       setSelectedReviewId(null);
       setSelectedTone(null);
       setGeneratedResponse(null);
-      toast.success("Response Generated Successfully", {
-        duration: 3000,
+      toast.success("Response accepted and saved!", {
+        description: "The review has been marked as responded",
+        action: {
+          label: "View Summary",
+          onClick: () => setActiveTab("summary"),
+        },
+        duration: 5000,
       });
     }
   };
@@ -240,6 +271,7 @@ export default function Home() {
               reviews={filteredReviews}
               selectedReviewId={selectedReviewId}
               onSelectReview={handleSelectReview}
+              onReorderReviews={handleReorderReviews}
               filters={filters}
               onFiltersChange={setFilters}
               searchTerm={searchTerm}
@@ -250,23 +282,23 @@ export default function Home() {
           {/* Workspace Panel */}
           <section className="glass-card rounded-2xl overflow-hidden min-h-[600px] animate-fade-in-glass">
             {/* Tabs */}
-            <div className="flex border-b border-white/10 bg-white/5">
+            <div className="flex border-b border-white/10 bg-white/5 animate-slide-in-right">
               <button
                 onClick={() => setActiveTab("response")}
-                className={`flex-1 py-4 text-sm font-semibold text-center border-b-2 transition-all duration-300 ${
+                className={`flex-1 py-4 text-sm font-semibold text-center border-b-2 transition-all duration-500 ease-out transform hover:scale-105 ${
                   activeTab === "response"
-                    ? "border-cyan-400 text-cyan-300 neon-glow-cyan"
-                    : "border-transparent text-cyan-100/60 hover:text-cyan-300 hover:border-cyan-400/50"
+                    ? "border-cyan-400 text-cyan-300 neon-glow-cyan shadow-lg"
+                    : "border-transparent text-cyan-100/60 hover:text-cyan-300 hover:border-cyan-400/50 hover:shadow-md"
                 }`}
               >
                 Review Response
               </button>
               <button
                 onClick={() => setActiveTab("summary")}
-                className={`flex-1 py-4 text-sm font-semibold text-center border-b-2 transition-all duration-300 ${
+                className={`flex-1 py-4 text-sm font-semibold text-center border-b-2 transition-all duration-500 ease-out transform hover:scale-105 ${
                   activeTab === "summary"
-                    ? "border-pink-400 text-pink-300 neon-glow-magenta"
-                    : "border-transparent text-cyan-100/60 hover:text-pink-300 hover:border-pink-400/50"
+                    ? "border-pink-400 text-pink-300 neon-glow-magenta shadow-lg"
+                    : "border-transparent text-cyan-100/60 hover:text-pink-300 hover:border-pink-400/50 hover:shadow-md"
                 }`}
               >
                 Summary & Insights
@@ -300,7 +332,7 @@ export default function Home() {
                         <p className="text-base font-bold text-cyan-300 uppercase tracking-wide">
                           Selected review
                         </p>
-                        <div className="glass rounded-xl border p-6 space-y-2">
+                        <div className="glass rounded-xl border p-6 space-y-2 hover:shadow-xl transition-all duration-300 hover:border-cyan-400/50">
                           <div className="space-y-2 mb-2">
                             <div className="flex items-center justify-between">
                               <div className="flex items-center gap-3">
@@ -323,7 +355,9 @@ export default function Home() {
                               )}
                             </div>
                           </div>
-                          <p className="text-cyan-50 leading-relaxed text-base">{selectedReview.text}</p>
+                          <p className="text-cyan-50 leading-relaxed text-base">
+                            {selectedReview.text}
+                          </p>
                         </div>
                       </div>
 
@@ -339,23 +373,29 @@ export default function Home() {
                         <button
                           onClick={handleGenerate}
                           disabled={!selectedTone || responseMutation.isPending}
-                          className={`w-full md:w-auto btn-primary focus-neon-glow ${
-                            !selectedTone || responseMutation.isPending ? "opacity-70 cursor-not-allowed" : ""
+                          className={`w-full md:w-auto btn-primary focus-neon-glow transition-all duration-300 transform hover:scale-105 active:scale-95 ${
+                            !selectedTone || responseMutation.isPending ? "opacity-70 cursor-not-allowed hover:scale-100" : "hover:shadow-2xl"
                           }`}
                         >
-                          {responseMutation.isPending ? "Generating..." : "Generate Response"}
+                          {responseMutation.isPending ? (
+                            <span className="flex items-center gap-2">
+                              <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+                              Generating...
+                            </span>
+                          ) : (
+                            "Generate Response"
+                          )}
                         </button>
                       </div>
 
                       {responseMutation.isPending && (
-                        <div className="border border-gray-200 rounded-lg">
-                          <LoadingSpinner />
-                        </div>
+                        <LoadingSpinner />
                       )}
 
                       {generatedResponse && !responseMutation.isPending && (
                         <ResponseViewer
                           response={generatedResponse}
+                          review={selectedReview}
                           onRegenerate={handleRegenerate}
                           onAccept={handleAccept}
                           isGenerating={responseMutation.isPending}

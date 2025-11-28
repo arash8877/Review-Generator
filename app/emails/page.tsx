@@ -363,6 +363,7 @@ export default function EmailsPage() {
                       {generatedResponse && !responseMutation.isPending && (
                         <ResponseViewer
                           response={generatedResponse}
+                          email={selectedEmail}
                           onRegenerate={handleRegenerate}
                           onAccept={handleAccept}
                           isGenerating={responseMutation.isPending}
