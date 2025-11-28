@@ -87,19 +87,14 @@ function FiltersPanel({ filters, onFiltersChange, searchTerm, onSearchChange }: 
         <label htmlFor="search-reviews" className="text-[10px] font-medium text-cyan-200/80 uppercase tracking-wide block">
           Search
         </label>
-        <div className="relative">
-          <input
-            id="search-reviews"
-            type="search"
-            value={searchTerm}
-            placeholder="Find by customer, product, or text..."
-            onChange={(e) => onSearchChange(e.target.value)}
-            className="w-full px-3 py-2 text-sm border border-cyan-400/30 rounded-md bg-white/5 text-cyan-100 focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:border-transparent backdrop-blur-sm placeholder:text-cyan-100/60"
-          />
-          <span className="absolute inset-y-0 right-3 flex items-center text-cyan-100/60 text-xs">
-            CMD+K
-          </span>
-        </div>
+        <input
+          id="search-reviews"
+          type="search"
+          value={searchTerm}
+          placeholder="Find by customer, product,..."
+          onChange={(e) => onSearchChange(e.target.value)}
+          className="w-full px-3 py-2 text-sm border border-cyan-400/30 rounded-md bg-white/5 text-cyan-100 focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:border-transparent backdrop-blur-sm placeholder:text-cyan-100/60"
+        />
       </div>
     </div>
   );
