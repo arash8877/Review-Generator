@@ -62,6 +62,7 @@ function EmailPreviewModal({ isOpen, onClose, data, response, displayText, isEma
 
   const customerName = data.customerName;
   const productModel = data.productModel;
+  const isAnsweredEmail = isEmail && (data as CustomerEmail).answered;
 
   return (
     <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-fade-in" onClick={onClose}>
@@ -100,11 +101,16 @@ function EmailPreviewModal({ isOpen, onClose, data, response, displayText, isEma
                   {!isEmail && (
                     <span className="text-yellow-400 text-sm">{getRatingStars((data as Review).rating)}</span>
                   )}
-                  {isEmail && (
-                    <span className="px-2 py-1 text-xs font-semibold rounded bg-red-500/20 text-red-300 border">
-                      Priority: {(data as CustomerEmail).priority}
-                    </span>
-                  )}
+                  {isEmail &&
+                    (isAnsweredEmail ? (
+                      <span className="px-2 py-1 text-xs font-semibold rounded bg-cyan-500/20 text-cyan-300 border">
+                        Replied
+                      </span>
+                    ) : (
+                      <span className="px-2 py-1 text-xs font-semibold rounded bg-red-500/20 text-red-300 border">
+                        Priority: {(data as CustomerEmail).priority}
+                      </span>
+                    ))}
                 </div>
                 <span className="px-2 py-1 text-xs font-semibold rounded bg-purple-500/20 text-purple-300 border">
                   {productModel}

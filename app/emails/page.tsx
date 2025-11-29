@@ -305,31 +305,34 @@ export default function EmailsPage() {
                           Selected email
                         </p>
                         <div className="glass rounded-xl border p-6 space-y-2">
-                          <div className="space-y-2 mb-2">
-                            <div className="flex items-center justify-between">
-                              <div className="flex items-center gap-3">
-                                <div className="flex flex-col gap-1">
-                                  <span className="text-sm font-medium text-cyan-100">
-                                    {selectedEmail.customerName}
-                                  </span>
-                                  {selectedEmail.answered && (
+                            <div className="space-y-2 mb-2">
+                              <div className="flex items-center justify-between">
+                                <div className="flex items-center gap-3">
+                                  <div className="flex flex-col gap-1">
+                                    <span className="text-sm font-medium text-cyan-100">
+                                      {selectedEmail.customerName}
+                                    </span>
+                                  </div>
+                                </div>
+                                <div className="flex items-center gap-2">
+                                  {selectedEmail.answered ? (
                                     <span className="px-2 py-1 text-xs font-semibold rounded bg-cyan-500/20 text-cyan-300 border">
-                                      Responded
+                                      Replied
+                                    </span>
+                                  ) : (
+                                    <span className={`px-2 py-1 text-xs font-semibold rounded border ${selectedEmail.priority === "high" ? "bg-red-500/20 text-red-200 border-red-400/40" : selectedEmail.priority === "medium" ? "bg-amber-500/20 text-amber-200 border-amber-400/30" : "bg-emerald-500/20 text-emerald-200 border-emerald-400/30"}`}>
+                                      {selectedEmail.priority} priority
                                     </span>
                                   )}
+                                  <span className="px-2 py-1 text-xs font-semibold rounded bg-purple-500/20 text-purple-300 border">
+                                    {selectedEmail.productModel}
+                                  </span>
                                 </div>
-                                <span className={`px-2 py-1 text-xs font-semibold rounded border ${selectedEmail.priority === "high" ? "bg-red-500/20 text-red-200 border-red-400/40" : selectedEmail.priority === "medium" ? "bg-amber-500/20 text-amber-200 border-amber-400/30" : "bg-emerald-500/20 text-emerald-200 border-emerald-400/30"}`}>
-                                  {selectedEmail.priority} priority
-                                </span>
                               </div>
-                              <span className="px-2 py-1 text-xs font-semibold rounded bg-purple-500/20 text-purple-300 border">
-                                {selectedEmail.productModel}
-                              </span>
+                              <div className="flex items-center justify-between">
+                                <p className="text-cyan-100 font-semibold">{selectedEmail.subject}</p>
+                              </div>
                             </div>
-                            <div className="flex items-center justify-between">
-                              <p className="text-cyan-100 font-semibold">{selectedEmail.subject}</p>
-                            </div>
-                          </div>
                           <p className="text-cyan-50 leading-relaxed text-base whitespace-pre-wrap">{selectedEmail.body}</p>
                         </div>
                       </div>

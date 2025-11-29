@@ -160,7 +160,7 @@ function ReviewItem({
           <div className="flex items-center gap-2">
             {review.answered && (
               <span className="px-2 py-0.5 text-[10px] font-semibold rounded border bg-cyan-500/20 text-cyan-300 border-cyan-400/30 neon-border-cyan">
-                Responded
+                Replied
               </span>
             )}
           </div>
