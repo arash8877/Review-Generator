@@ -61,7 +61,7 @@ function FiltersPanel({ filters, onFiltersChange, searchTerm, onSearchChange }: 
       
       <div className="space-y-2">
         <label htmlFor="status-filter" className="text-[10px] font-medium text-cyan-200/80 uppercase tracking-wide block">
-          Status & Sentiment
+          Periority
         </label>
         <select
           id="status-filter"
@@ -70,7 +70,6 @@ function FiltersPanel({ filters, onFiltersChange, searchTerm, onSearchChange }: 
           className="w-full px-3 py-2 text-sm border border-cyan-400/30 rounded-md bg-white/5 text-cyan-100 focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:border-transparent backdrop-blur-sm"
         >
           <option value="all">All emails</option>
-          <option value="answered">Replied</option>
           <option value="priority-high">High priority</option>
           <option value="priority-medium">Medium priority</option>
           <option value="priority-low">Low priority</option>
@@ -197,13 +196,6 @@ export function EmailSelector({
         <h2 className="text-xl font-semibold text-cyan-200">Customer Emails</h2>
       </div>
 
-      <FiltersPanel
-        filters={filters}
-        onFiltersChange={onFiltersChange}
-        searchTerm={searchTerm}
-        onSearchChange={onSearchChange}
-      />
-
       <div className="glass rounded-xl p-3 border border-cyan-400/20 space-y-3">
         <p className="text-[10px] font-semibold text-cyan-300 uppercase tracking-wide px-1">
           View
@@ -226,6 +218,13 @@ export function EmailSelector({
           ))}
         </div>
       </div>
+
+      <FiltersPanel
+        filters={filters}
+        onFiltersChange={onFiltersChange}
+        searchTerm={searchTerm}
+        onSearchChange={onSearchChange}
+      />
 
       {view === "all" ? (
         <div className="space-y-5 max-h-[70vh] overflow-y-auto pr-1 custom-scroll">
