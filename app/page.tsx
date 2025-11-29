@@ -350,7 +350,7 @@ export default function Home() {
                             <div>
                               {selectedReview.answered && (
                                 <span className="px-2 py-1 text-xs font-semibold rounded bg-cyan-500/20 text-cyan-300 border">
-                                  Answered
+                                  Replied
                                 </span>
                               )}
                             </div>

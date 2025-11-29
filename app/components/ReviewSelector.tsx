@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { Review, StatusFilter, ProductModelFilter, Filters } from "@/app/lib/types";
 
 interface ReviewSelectorProps {
@@ -25,10 +25,6 @@ interface ReviewItemProps {
   review: Review;
   isSelected: boolean;
   onSelect: (id: string) => void;
-  onDragStart?: (e: React.DragEvent, reviewId: string) => void;
-  onDragOver?: (e: React.DragEvent) => void;
-  onDrop?: (e: React.DragEvent, targetId: string) => void;
-  isDragging?: boolean;
 }
 
 function FiltersPanel({ filters, onFiltersChange, searchTerm, onSearchChange }: FiltersProps) {
@@ -58,7 +54,7 @@ function FiltersPanel({ filters, onFiltersChange, searchTerm, onSearchChange }: 
           htmlFor="status-filter"
           className="text-[10px] font-medium text-cyan-200/80 uppercase tracking-wide block"
         >
-          Status & Sentiment
+          Periority
         </label>
         <select
           id="status-filter"
@@ -67,7 +63,6 @@ function FiltersPanel({ filters, onFiltersChange, searchTerm, onSearchChange }: 
           className="w-full px-3 py-2 text-sm border border-cyan-400/30 rounded-md bg-white/5 text-cyan-100 focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:border-transparent backdrop-blur-sm"
         >
           <option value="all">All Reviews</option>
-          <option value="answered">Answered</option>
           <option value="positive">Positive</option>
           <option value="negative">Negative</option>
           <option value="neutral">Neutral</option>
@@ -117,40 +112,17 @@ function FiltersPanel({ filters, onFiltersChange, searchTerm, onSearchChange }: 
   );
 }
 
-function ReviewItem({
-  review,
-  isSelected,
-  onSelect,
-  onDragStart,
-  onDragOver,
-  onDrop,
-  isDragging,
-}: ReviewItemProps) {
+function ReviewItem({ review, isSelected, onSelect }: ReviewItemProps) {
   const getRatingStars = (rating: number) => "★".repeat(rating) + "☆".repeat(5 - rating);
 
   return (
     <div
-      draggable
-      onDragStart={(e) => onDragStart?.(e, review.id)}
-      onDragOver={onDragOver}
-      onDrop={(e) => onDrop?.(e, review.id)}
       className={`group relative rounded-xl border p-4 text-left transition-all duration-300 ${
-        isDragging
-          ? "opacity-50 scale-95"
-          : isSelected
+        isSelected
           ? "glass-strong border-cyan-400/50 neon-glow-cyan-strong"
           : "glass border-white/10 hover:border-cyan-400/30 hover:neon-glow-cyan"
       }`}
     >
-      {/* Drag Handle */}
-      <div className="absolute left-2 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-        <div className="flex flex-col gap-1 p-1 rounded hover:bg-white/10 transition-colors">
-          <div className="w-3 h-0.5 bg-cyan-400/60 rounded-full"></div>
-          <div className="w-3 h-0.5 bg-cyan-400/60 rounded-full"></div>
-          <div className="w-3 h-0.5 bg-cyan-400/60 rounded-full"></div>
-        </div>
-      </div>
-
       <button type="button" onClick={() => onSelect(review.id)} className="w-full text-left">
         <div className="flex items-center justify-between mb-2">
           <span className="text-sm font-medium text-cyan-100">{review.customerName}</span>
@@ -181,73 +153,59 @@ export function ReviewSelector({
   reviews,
   selectedReviewId,
   onSelectReview,
-  onReorderReviews,
   filters,
   onFiltersChange,
   searchTerm,
   onSearchChange,
 }: ReviewSelectorProps) {
-  const [draggedId, setDraggedId] = useState<string | null>(null);
-  const [dragOverId, setDragOverId] = useState<string | null>(null);
+  const [view, setView] = useState<"open" | "responded" | "all">("open");
 
-  const handleDragStart = (e: React.DragEvent, reviewId: string) => {
-    setDraggedId(reviewId);
-    e.dataTransfer.effectAllowed = "move";
-    e.dataTransfer.setData("text/plain", reviewId);
-  };
+  const respondedReviews = useMemo(
+    () => reviews.filter((review) => review.answered),
+    [reviews]
+  );
+  const openReviews = useMemo(
+    () => reviews.filter((review) => !review.answered),
+    [reviews]
+  );
 
-  const handleDragOver = (e: React.DragEvent) => {
-    e.preventDefault();
-    e.dataTransfer.dropEffect = "move";
-  };
+  const viewOptions: { key: "open" | "responded" | "all"; label: string }[] = [
+    { key: "open", label: "Open" },
+    { key: "responded", label: "Replied" },
+    { key: "all", label: "All" },
+  ];
 
-  const handleDragEnter = (reviewId: string) => {
-    setDragOverId(reviewId);
-  };
+  const activeList =
+    view === "open" ? openReviews : view === "responded" ? respondedReviews : reviews;
 
-  const handleDragLeave = () => {
-    setDragOverId(null);
-  };
-
-  const handleDrop = (e: React.DragEvent, targetId: string) => {
-    e.preventDefault();
-    const draggedReviewId = e.dataTransfer.getData("text/plain");
-
-    if (draggedReviewId && draggedReviewId !== targetId && onReorderReviews) {
-      const draggedIndex = reviews.findIndex((r) => r.id === draggedReviewId);
-      const targetIndex = reviews.findIndex((r) => r.id === targetId);
-
-      if (draggedIndex !== -1 && targetIndex !== -1) {
-        const newReviews = [...reviews];
-        const [draggedReview] = newReviews.splice(draggedIndex, 1);
-        newReviews.splice(targetIndex, 0, draggedReview);
-        onReorderReviews(newReviews);
-      }
-    }
-
-    setDraggedId(null);
-    setDragOverId(null);
-  };
-
-  const handleDragEnd = () => {
-    setDraggedId(null);
-    setDragOverId(null);
-  };
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between gap-2">
         <h2 className="text-xl font-semibold text-cyan-200">Reviews</h2>
-        <p className="text-xs text-cyan-300/70 uppercase tracking-wide">{reviews.length} items</p>
       </div>
 
-      {onReorderReviews && (
-        <div className="glass rounded-lg p-3 border border-cyan-400/20">
-          <p className="text-xs text-cyan-100/80 flex items-center gap-2">
-            <span className="text-cyan-400">💡</span>
-            Drag reviews to reorder by priority
-          </p>
+      <div className="glass rounded-xl p-3 border border-cyan-400/20 space-y-3">
+        <p className="text-[10px] font-semibold text-cyan-300 uppercase tracking-wide px-1">
+          View
+        </p>
+        <div className="grid grid-cols-3 gap-2">
+          {viewOptions.map(({ key, label }) => (
+            <button
+              key={key}
+              type="button"
+              onClick={() => setView(key as "open" | "responded" | "all")}
+              className={`w-full rounded-lg px-3 py-2 border transition-all duration-200 flex items-center justify-center ${
+                view === key
+                  ? "glass-strong border-cyan-400/60 text-cyan-100 neon-glow-cyan-strong"
+                  : "glass border-white/10 text-cyan-100/70 hover:border-cyan-400/40 hover:text-cyan-100"
+              }`}
+              aria-label={label}
+            >
+              <span className="text-sm font-semibold text-center">{label}</span>
+            </button>
+          ))}
         </div>
-      )}
+      </div>
 
       <FiltersPanel
         filters={filters}
@@ -256,26 +214,62 @@ export function ReviewSelector({
         onSearchChange={onSearchChange}
       />
 
-      <div className="space-y-3 max-h-[70vh] overflow-y-auto pr-1 custom-scroll stagger-children">
-        {reviews.length === 0 && (
-          <div className="glass rounded-xl border border-dashed border-cyan-400/30 p-4 text-center text-cyan-100/70 animate-fade-in-up">
-            No reviews match the current filters. Try resetting or searching differently.
+      {view === "all" ? (
+        <div className="space-y-5 max-h-[70vh] overflow-y-auto pr-1 custom-scroll stagger-children">
+          <div className="space-y-3">
+            {openReviews.length === 0 ? (
+              <div className="glass rounded-xl border border-dashed border-cyan-400/30 p-4 text-center text-cyan-100/70 animate-fade-in-up">
+                No open reviews match the current filters.
+              </div>
+            ) : (
+              openReviews.map((review) => (
+                <ReviewItem
+                  key={review.id}
+                  review={review}
+                  isSelected={selectedReviewId === review.id}
+                  onSelect={onSelectReview}
+                />
+              ))
+            )}
           </div>
-        )}
 
-        {reviews.map((review) => (
-          <ReviewItem
-            key={review.id}
-            review={review}
-            isSelected={selectedReviewId === review.id}
-            onSelect={onSelectReview}
-            onDragStart={handleDragStart}
-            onDragOver={handleDragOver}
-            onDrop={handleDrop}
-            isDragging={draggedId === review.id}
-          />
-        ))}
-      </div>
+          <div className="space-y-3 pt-3 border-t border-white/10">
+            {respondedReviews.length === 0 ? (
+              <div className="glass rounded-xl border border-dashed border-cyan-400/20 p-4 text-center text-cyan-100/70 animate-fade-in-up">
+                Replied reviews will move here automatically.
+              </div>
+            ) : (
+              respondedReviews.map((review) => (
+                <ReviewItem
+                  key={review.id}
+                  review={review}
+                  isSelected={selectedReviewId === review.id}
+                  onSelect={onSelectReview}
+                />
+              ))
+            )}
+          </div>
+        </div>
+      ) : (
+        <div className="space-y-3 max-h-[70vh] overflow-y-auto pr-1 custom-scroll stagger-children">
+          {activeList.length === 0 ? (
+            <div className="glass rounded-xl border border-dashed border-cyan-400/30 p-4 text-center text-cyan-100/70 animate-fade-in-up">
+              {view === "responded"
+                ? "No replied reviews match the current filters."
+                : "No open reviews match the current filters."}
+            </div>
+          ) : (
+            activeList.map((review) => (
+              <ReviewItem
+                key={review.id}
+                review={review}
+                isSelected={selectedReviewId === review.id}
+                onSelect={onSelectReview}
+              />
+            ))
+          )}
+        </div>
+      )}
     </div>
   );
 }

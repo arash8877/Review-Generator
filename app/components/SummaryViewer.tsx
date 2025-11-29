@@ -1,4 +1,5 @@
 import { SummaryResponse, ProductModelFilter } from "@/app/lib/types";
+import { LoadingSpinner } from "./LoadingSpinner";
 
 interface SummaryViewerProps {
   data?: SummaryResponse | null;
@@ -128,9 +129,8 @@ export function SummaryViewer({
 
   if (isLoading) {
     return (
-      <div className="flex flex-col items-center justify-center min-h-[300px] space-y-4">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-cyan-400 neon-glow-cyan"></div>
-        <p className="text-cyan-200 font-medium">Analyzing reviews...</p>
+      <div className="border border-gray-200/10 rounded-xl">
+        <LoadingSpinner message="Analyzing reviews..." subtext="Reading through feedback" />
       </div>
     );
   }

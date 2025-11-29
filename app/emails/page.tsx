@@ -227,7 +227,7 @@ export default function EmailsPage() {
       <div className="max-w-8xl mx-auto">
         <div className="text-center mb-8">
           <h1 className="text-5xl font-bold mb-2">
-            <span className="neon-text-cyan">Inbox Response</span>{" "}
+            <span className="neon-text-cyan">Email Response</span>{" "}
             <span className="neon-text-magenta">Assistant</span>
           </h1>
           <p className="text-lg text-cyan-100/80">Generate replies, summaries, and insights for customer emails</p>
