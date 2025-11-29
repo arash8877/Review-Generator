@@ -1,4 +1,5 @@
 import { SummaryResponse, ProductModelFilter } from "@/app/lib/types";
+import { LoadingSpinner } from "./LoadingSpinner";
 
 interface EmailSummaryViewerProps {
   data?: SummaryResponse | null;
@@ -128,9 +129,8 @@ export function EmailSummaryViewer({
 
   if (isLoading) {
     return (
-      <div className="flex flex-col items-center justify-center min-h-[300px] space-y-4">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-cyan-400 neon-glow-cyan"></div>
-        <p className="text-cyan-200 font-medium">Reading through emails...</p>
+      <div className="border border-gray-200/10 rounded-xl">
+        <LoadingSpinner message="Generating inbox insights..." subtext="Reading through emails" />
       </div>
     );
   }

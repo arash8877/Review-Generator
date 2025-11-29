@@ -261,36 +261,38 @@ function ActionButtons({
   }
 
   return (
-    <div className="flex flex-wrap gap-3">
-      <button
-        onClick={onRegenerate}
-        className="px-4 py-2 bg-gradient-to-r from-cyan-500 to-blue-500 text-white rounded-lg hover:from-cyan-400 hover:to-blue-400 transition-all duration-300 neon-glow-cyan hover-neon-glow"
-      >
-        Regenerate
-      </button>
-      <button
-        onClick={onEdit}
-        className="px-4 py-2 bg-gradient-to-r from-pink-500 to-purple-500 text-white rounded-lg hover:from-pink-400 hover:to-purple-400 transition-all duration-300 neon-glow-magenta"
-      >
-        Edit Manually
-      </button>
-      <button
-        onClick={onCopy}
-        className="px-4 py-2 bg-white/10 text-cyan-100 rounded-lg border border-cyan-400/30 hover:border-cyan-300 transition-all"
-      >
-        {copied ? "Copied" : "Copy"}
-      </button>
-      {onPreview && (
+    <div className="flex flex-wrap items-center gap-3 justify-between">
+      <div className="flex flex-wrap items-center gap-3">
         <button
-          onClick={onPreview}
-          className="px-4 py-2 bg-gradient-to-r from-indigo-500 to-purple-500 text-white rounded-lg hover:from-indigo-400 hover:to-purple-400 transition-all duration-300 neon-glow-magenta"
+          onClick={onRegenerate}
+          className="px-4 py-2 bg-gradient-to-r from-cyan-500 to-blue-500 text-white rounded-lg hover:from-cyan-400 hover:to-blue-400 transition-all duration-300 neon-glow-cyan hover-neon-glow"
         >
-          Preview Email
+          Regenerate
         </button>
-      )}
+        <button
+          onClick={onEdit}
+          className="px-4 py-2 bg-gradient-to-r from-pink-500 to-purple-500 text-white rounded-lg hover:from-pink-400 hover:to-purple-400 transition-all duration-300 neon-glow-magenta"
+        >
+          Edit Manually
+        </button>
+        <button
+          onClick={onCopy}
+          className="px-4 py-2 bg-white/10 text-cyan-100 rounded-lg border border-cyan-400/30 hover:border-cyan-300 transition-all"
+        >
+          {copied ? "Copied" : "Copy"}
+        </button>
+        {onPreview && (
+          <button
+            onClick={onPreview}
+            className="px-4 py-2 bg-gradient-to-r from-indigo-500 to-purple-500 text-white rounded-lg hover:from-indigo-400 hover:to-purple-400 transition-all duration-300 neon-glow-magenta"
+          >
+            Preview Email
+          </button>
+        )}
+      </div>
       <button
         onClick={onAccept}
-        className="px-4 py-2 bg-gradient-to-r from-emerald-500 to-teal-500 text-white rounded-lg hover:from-emerald-400 hover:to-teal-400 transition-all duration-300 neon-glow-blue"
+        className="px-4 py-2 bg-gradient-to-r from-emerald-500 to-teal-500 text-white rounded-lg hover:from-emerald-400 hover:to-teal-400 transition-all duration-300 neon-glow-blue flex-shrink-0"
       >
         Send
       </button>
