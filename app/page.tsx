@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { ReviewSelector } from "./components/ReviewSelector";
 import { ToneSelector } from "./components/ToneSelector";
@@ -219,6 +219,15 @@ export default function Home() {
     };
   }, [reviewsState]);
 
+  useEffect(() => {
+    if (selectedReview) {
+      setSelectedTone(recommendedTone?.tone ?? null);
+    } else {
+      setSelectedTone(null);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedReview?.id, recommendedTone?.tone]);
+
   const filteredReviews = useMemo(() => {
     const normalizedSearch = searchTerm.trim().toLowerCase();
 
@@ -368,7 +377,6 @@ export default function Home() {
                           disabled={!selectedReview}
                           recommendedTone={recommendedTone?.tone || null}
                           recommendationReason={recommendedTone?.reason}
-                          onUseRecommended={(tone) => setSelectedTone(tone)}
                         />
                         <button
                           onClick={handleGenerate}

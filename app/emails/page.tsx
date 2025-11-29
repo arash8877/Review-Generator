@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { EmailSelector } from "../components/EmailSelector";
 import { ToneSelector } from "../components/ToneSelector";
@@ -187,6 +187,15 @@ export default function EmailsPage() {
     };
   }, [emailsState]);
 
+  useEffect(() => {
+    if (selectedEmail) {
+      setSelectedTone(recommendedTone?.tone ?? null);
+    } else {
+      setSelectedTone(null);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedEmail?.id, recommendedTone?.tone]);
+
   const productFilterMap: Record<ProductModelFilter, string | undefined> = {
     all: undefined,
     "model-1": "TV-Model 1",
@@ -357,7 +366,6 @@ export default function EmailsPage() {
                           disabled={!selectedEmail}
                           recommendedTone={recommendedTone?.tone || null}
                           recommendationReason={recommendedTone?.reason}
-                          onUseRecommended={(tone) => setSelectedTone(tone)}
                         />
                         <button
                           onClick={handleGenerate}

@@ -177,6 +177,15 @@ export default function PhoneCallsPage() {
 
   const recommendedTone = selectedCall?.recommendedTone ?? null;
 
+  // Auto-apply recommended tone for calls
+  useEffect(() => {
+    if (selectedCall) {
+      setSelectedTone(recommendedTone ?? null);
+    } else {
+      setSelectedTone(null);
+    }
+  }, [selectedCall?.id, recommendedTone]);
+
   // Scroll to the generated response when it becomes available
   useEffect(() => {
     if (generatedResponse && responseSectionRef.current) {
@@ -460,17 +469,12 @@ export default function PhoneCallsPage() {
                             </div>
 
                             <div className="grid md:grid-cols-[1fr,auto] gap-6 items-end">
-                              <div className="space-y-3">
-                                <label className="text-sm font-medium text-cyan-200">Response Tone</label>
-                                <ToneSelector
-                                  selectedTone={selectedTone}
-                                  onSelectTone={setSelectedTone}
-                                  disabled={!selectedCall}
-                                  recommendedTone={recommendedTone}
-                                  recommendationReason={recommendedTone ? "AI suggested tone based on sentiment and urgency" : undefined}
-                                  onUseRecommended={(tone) => setSelectedTone(tone)}
-                                />
-                              </div>
+                              <ToneSelector
+                                selectedTone={selectedTone}
+                                onSelectTone={setSelectedTone}
+                                disabled={!selectedCall}
+                                recommendedTone={recommendedTone}
+                              />
 
                               <div className="space-y-3">
                                 <button

@@ -9,7 +9,6 @@ interface ToneSelectorProps {
   disabled?: boolean;
   recommendedTone?: Tone | null;
   recommendationReason?: string;
-  onUseRecommended?: (tone: Tone) => void;
 }
 
 export function ToneSelector({
@@ -18,18 +17,9 @@ export function ToneSelector({
   disabled = false,
   recommendedTone = null,
   recommendationReason,
-  onUseRecommended,
 }: ToneSelectorProps) {
   return (
     <div className="space-y-3">
-      <label
-        htmlFor="tone-select"
-        className="block text-sm font-medium text-cyan-200">
-        Select Response Tone
-      </label>
-      <p className="text-xs text-cyan-100/70">
-        Align the AI draft to the customer sentiment before generating.
-      </p>
       {recommendedTone && (
         <div className="flex flex-wrap items-center gap-2 text-xs text-cyan-100/80">
           <span className="px-2 py-1 rounded-full bg-cyan-500/15 border border-cyan-400/40 text-cyan-50 font-semibold">
@@ -38,22 +28,14 @@ export function ToneSelector({
           {recommendationReason && (
             <span className="text-cyan-100/70">{recommendationReason}</span>
           )}
-          {onUseRecommended && (
-            <button
-              type="button"
-              onClick={() => onUseRecommended(recommendedTone)}
-              disabled={disabled}
-              className={`px-3 py-1 rounded-md border text-xs font-semibold transition-all ${
-                disabled
-                  ? "bg-gray-600/30 text-gray-400 border-gray-500/40 cursor-not-allowed"
-                  : "bg-white/5 text-cyan-50 border-cyan-400/40 hover:border-cyan-300 hover:bg-white/10"
-              }`}
-            >
-              Apply tone
-            </button>
-          )}
         </div>
       )}
+
+      <label
+        htmlFor="tone-select"
+        className="block text-sm font-medium text-cyan-200">
+        Select Response Tone
+      </label>
       <select
         id="tone-select"
         value={selectedTone || ""}
