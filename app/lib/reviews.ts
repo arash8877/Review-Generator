@@ -6,7 +6,7 @@ export const reviews: Review[] = [
     text: "Absolutely love this TV! The picture quality is stunning, colors are vibrant, and the sound is crystal clear. Best purchase I've made this year. Highly recommend!",
     rating: 5,
     sentiment: "positive",
-    customerName: "Sarah Jenkins",
+    customerName: "Camilla Frederiksen",
     productModel: "TV-Model 1",
   },
   {
@@ -14,7 +14,7 @@ export const reviews: Review[] = [
     text: "Terrible experience. The TV arrived with a cracked screen and customer service was unhelpful. Had to return it immediately. Very disappointed.",
     rating: 1,
     sentiment: "negative",
-    customerName: "Mike Thompson",
+    customerName: "Rasmus Kaer",
     productModel: "TV-Model 2",
   },
   {
@@ -22,7 +22,7 @@ export const reviews: Review[] = [
     text: "Decent TV for the price. Picture quality is okay, but the smart features are a bit slow. It does the job but nothing special.",
     rating: 3,
     sentiment: "neutral",
-    customerName: "Emily Chen",
+    customerName: "Malene Borch",
     productModel: "TV-Model 3",
   },
   {
@@ -30,7 +30,7 @@ export const reviews: Review[] = [
     text: "The remote control stopped working after just 2 weeks. The TV itself is fine, but this is frustrating. Should I have to buy a new remote so soon?",
     rating: 2,
     sentiment: "negative",
-    customerName: "David Wilson",
+    customerName: "Jonas Riis",
     productModel: "TV-Model 4",
   },
   {
@@ -38,7 +38,7 @@ export const reviews: Review[] = [
     text: "Amazing value for money! The 4K resolution is incredible, and the built-in apps work flawlessly. Setup was super easy. Couldn't be happier!",
     rating: 5,
     sentiment: "positive",
-    customerName: "Jessica Martinez",
+    customerName: "Pernille Lind",
     productModel: "TV-Model 1",
   },
   {
@@ -46,7 +46,7 @@ export const reviews: Review[] = [
     text: "The TV has good picture quality, but the viewing angles are poor. If you're not sitting directly in front, the colors look washed out. Not ideal for a living room.",
     rating: 3,
     sentiment: "neutral",
-    customerName: "Robert Taylor",
+    customerName: "Anders Krog",
     productModel: "TV-Model 2",
   },
   {
@@ -54,7 +54,7 @@ export const reviews: Review[] = [
     text: "Worst TV I've ever owned. Constant software crashes, apps freeze regularly, and the Wi-Fi connection drops constantly. Save your money and buy something else.",
     rating: 1,
     sentiment: "negative",
-    customerName: "Lisa Anderson",
+    customerName: "Mette Holmgaard",
     productModel: "TV-Model 3",
   },
   {
@@ -62,7 +62,7 @@ export const reviews: Review[] = [
     text: "Perfect for gaming! Low input lag and smooth motion handling. The HDR looks fantastic. My friends are all jealous of this setup.",
     rating: 5,
     sentiment: "positive",
-    customerName: "Kevin White",
+    customerName: "Soren Hald",
     productModel: "TV-Model 4",
   },
   {
@@ -70,7 +70,7 @@ export const reviews: Review[] = [
     text: "The sound quality is really poor. Had to buy a soundbar immediately. For the price, I expected better built-in speakers. Picture is good though.",
     rating: 3,
     sentiment: "neutral",
-    customerName: "Amanda Thomas",
+    customerName: "Stine Vestergaard",
     productModel: "TV-Model 1",
   },
   {
@@ -78,7 +78,7 @@ export const reviews: Review[] = [
     text: "Excellent customer service when I had a question about setup. The TV itself is great - bright, clear, and the smart interface is intuitive. Very satisfied!",
     rating: 5,
     sentiment: "positive",
-    customerName: "Chris Garcia",
+    customerName: "Jacob Moller",
     productModel: "TV-Model 2",
   },
   {
@@ -86,7 +86,7 @@ export const reviews: Review[] = [
     text: "Dead pixels appeared after 3 months. Contacted support but they said it's not covered under warranty. Very disappointed with both the product and service.",
     rating: 2,
     sentiment: "negative",
-    customerName: "Patricia Robinson",
+    customerName: "Ida Kragh",
     productModel: "TV-Model 3",
   },
   {
@@ -94,7 +94,7 @@ export const reviews: Review[] = [
     text: "Good TV overall. The picture is nice and the price was reasonable. Some of the smart features could be faster, but it's acceptable for daily use.",
     rating: 4,
     sentiment: "positive",
-    customerName: "Daniel Lee",
+    customerName: "Frederik Dam",
     productModel: "TV-Model 4",
   },
   {
@@ -102,7 +102,7 @@ export const reviews: Review[] = [
     text: "The TV overheats after being on for a few hours. I'm worried about safety. This shouldn't happen with a brand new television. Very concerning.",
     rating: 2,
     sentiment: "negative",
-    customerName: "Jennifer Clark",
+    customerName: "Louise Bak",
     productModel: "TV-Model 1",
   },
   {
@@ -110,7 +110,7 @@ export const reviews: Review[] = [
     text: "Love the design - it's sleek and modern. The picture quality is excellent, especially for movies. The only downside is the limited app selection compared to competitors.",
     rating: 4,
     sentiment: "positive",
-    customerName: "Brian Lewis",
+    customerName: "Tobias Birk",
     productModel: "TV-Model 2",
   },
   {
@@ -118,7 +118,7 @@ export const reviews: Review[] = [
     text: "Average TV. Does what it's supposed to do but nothing stands out. The remote feels cheap and the menu system is confusing. It works, but I expected more.",
     rating: 3,
     sentiment: "neutral",
-    customerName: "Megan Walker",
+    customerName: "Silke Falk",
     productModel: "TV-Model 3",
   },
   {
@@ -126,7 +126,7 @@ export const reviews: Review[] = [
     text: "Outstanding picture quality! The colors are so vivid and realistic. Watching nature documentaries on this TV is like looking through a window. Absolutely worth every penny!",
     rating: 5,
     sentiment: "positive",
-    customerName: "Steven Harris",
+    customerName: "Kasper Seidel",
     productModel: "TV-Model 1",
   },
   {
@@ -134,7 +134,7 @@ export const reviews: Review[] = [
     text: "The backlight bleeding is terrible. Dark scenes look awful with bright spots around the edges. For a TV at this price point, this is unacceptable quality control.",
     rating: 1,
     sentiment: "negative",
-    customerName: "Rachel Moore",
+    customerName: "Julie Aagaard",
     productModel: "TV-Model 4",
   },
   {
@@ -142,7 +142,7 @@ export const reviews: Review[] = [
     text: "It's an okay TV. The interface is user-friendly and setup was straightforward. Picture quality is decent but not amazing. Gets the job done for everyday watching.",
     rating: 3,
     sentiment: "neutral",
-    customerName: "Thomas Young",
+    customerName: "Mikkel Bo",
     productModel: "TV-Model 2",
   },
   {
@@ -150,7 +150,7 @@ export const reviews: Review[] = [
     text: "Brilliant TV for sports! The motion handling is superb - no blur during fast action. The screen is bright enough even in a sunny room. Very impressed!",
     rating: 5,
     sentiment: "positive",
-    customerName: "Nicole King",
+    customerName: "Sofie Laursen",
     productModel: "TV-Model 3",
   },
   {
@@ -158,7 +158,7 @@ export const reviews: Review[] = [
     text: "HDMI ports stopped working after 6 months. Now I can't connect my gaming console. Support said it would cost almost as much as a new TV to repair. Total waste of money.",
     rating: 1,
     sentiment: "negative",
-    customerName: "Gregory Scott",
+    customerName: "Christian Bay",
     productModel: "TV-Model 1",
   },
   {
@@ -166,7 +166,7 @@ export const reviews: Review[] = [
     text: "The TV is fine for basic use. Netflix and YouTube work well. The picture isn't the sharpest I've seen, but it's acceptable. Nothing to complain about, nothing to rave about either.",
     rating: 3,
     sentiment: "neutral",
-    customerName: "Samantha Green",
+    customerName: "Nanna Krogh",
     productModel: "TV-Model 4",
   },
   {
@@ -174,7 +174,7 @@ export const reviews: Review[] = [
     text: "Fantastic smart features! Voice control works perfectly, and the app selection is comprehensive. The picture quality exceeds my expectations. Highly recommend for tech enthusiasts!",
     rating: 5,
     sentiment: "positive",
-    customerName: "Andrew Baker",
+    customerName: "Mads Dalgaard",
     productModel: "TV-Model 2",
   },
   {
@@ -182,7 +182,7 @@ export const reviews: Review[] = [
     text: "The screen has a weird yellowish tint that I can't adjust away. Colors don't look natural at all. Very disappointed with the color accuracy. Should have bought a different brand.",
     rating: 2,
     sentiment: "negative",
-    customerName: "Michelle Adams",
+    customerName: "Helene Brask",
     productModel: "TV-Model 3",
   },
   {
@@ -190,7 +190,7 @@ export const reviews: Review[] = [
     text: "Solid mid-range TV. The bezels are thin which looks modern. Sound is mediocre but acceptable. For the price, it's a reasonable purchase but don't expect premium features.",
     rating: 3,
     sentiment: "neutral",
-    customerName: "Joshua Nelson",
+    customerName: "Nikolaj Ibsen",
     productModel: "TV-Model 1",
   },
   {
@@ -198,7 +198,7 @@ export const reviews: Review[] = [
     text: "Best TV I've ever owned! The HDR performance is incredible - bright highlights and deep blacks. Streaming is seamless and the interface is lightning fast. 10/10 would buy again!",
     rating: 5,
     sentiment: "positive",
-    customerName: "Laura Carter",
+    customerName: "Anne Katrine Olesen",
     productModel: "TV-Model 4",
   },
   {
@@ -206,7 +206,7 @@ export const reviews: Review[] = [
     text: "Audio and video are constantly out of sync. Tried every setting and nothing fixes it. Makes watching anything unbearable. Returning this as soon as possible.",
     rating: 1,
     sentiment: "negative",
-    customerName: "William Mitchell",
+    customerName: "Emil Vang",
     productModel: "TV-Model 2",
   },
   {
@@ -214,7 +214,7 @@ export const reviews: Review[] = [
     text: "It does what it needs to do. The smart features are a bit limited compared to other brands. Picture is clear enough for news and sitcoms. Not bad, not great.",
     rating: 3,
     sentiment: "neutral",
-    customerName: "Elizabeth Perez",
+    customerName: "Karoline Brandt",
     productModel: "TV-Model 3",
   },
   {
@@ -222,7 +222,7 @@ export const reviews: Review[] = [
     text: "Absolutely stunning design! Ultra-thin profile looks amazing on the wall. The picture quality matches the aesthetics - crisp, bright, and beautiful. Guests always compliment it!",
     rating: 5,
     sentiment: "positive",
-    customerName: "Christopher Roberts",
+    customerName: "Simon Markvad",
     productModel: "TV-Model 1",
   },
   {
@@ -230,7 +230,7 @@ export const reviews: Review[] = [
     text: "The TV randomly turns off by itself. Happens multiple times a day. Customer service was no help - just told me to reset it, which doesn't work. Very frustrating experience.",
     rating: 2,
     sentiment: "negative",
-    customerName: "Sarah Turner",
+    customerName: "Ditte Hjorth",
     productModel: "TV-Model 4",
   },
   {
@@ -238,7 +238,7 @@ export const reviews: Review[] = [
     text: "Decent value for money. The picture is clear and colors are fairly accurate. The remote could be better designed. Overall, it's a competent TV without any standout features.",
     rating: 3,
     sentiment: "neutral",
-    customerName: "Matthew Phillips",
+    customerName: "Philip Kroer",
     productModel: "TV-Model 2",
   },
   {
@@ -246,7 +246,7 @@ export const reviews: Review[] = [
     text: "Phenomenal for movie nights! The contrast ratio is excellent and the upscaling of older content is impressive. The built-in speakers are surprisingly good too. Love it!",
     rating: 5,
     sentiment: "positive",
-    customerName: "Ashley Campbell",
+    customerName: "Alma Rosendahl",
     productModel: "TV-Model 3",
   },
   {
@@ -254,7 +254,7 @@ export const reviews: Review[] = [
     text: "Screen cracked during normal use - we didn't drop it or hit it. The manufacturer refused warranty coverage claiming physical damage. Terrible product quality and worse customer support.",
     rating: 1,
     sentiment: "negative",
-    customerName: "Ryan Parker",
+    customerName: "Victor Lemming",
     productModel: "TV-Model 1",
   },
   {
@@ -262,7 +262,7 @@ export const reviews: Review[] = [
     text: "The TV is okay. Setup was easy and the menus are straightforward. Picture quality is average - good enough for casual viewing. Nothing special but it works fine.",
     rating: 3,
     sentiment: "neutral",
-    customerName: "Kimberly Evans",
+    customerName: "Trine Bang",
     productModel: "TV-Model 4",
   },
   {
@@ -270,7 +270,7 @@ export const reviews: Review[] = [
     text: "Incredible gaming experience! The 120Hz refresh rate makes everything buttery smooth. Low latency and great color accuracy. Every gamer should consider this TV!",
     rating: 5,
     sentiment: "positive",
-    customerName: "Brandon Edwards",
+    customerName: "Magnus Seier",
     productModel: "TV-Model 2",
   },
   {
@@ -278,7 +278,7 @@ export const reviews: Review[] = [
     text: "The brightness is way too low even at maximum settings. Can barely see anything during daytime. The contrast is poor too. Not suitable for bright rooms at all.",
     rating: 2,
     sentiment: "negative",
-    customerName: "Stephanie Collins",
+    customerName: "Cecilie Norup",
     productModel: "TV-Model 3",
   },
 ];
