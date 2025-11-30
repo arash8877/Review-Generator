@@ -17,7 +17,7 @@ export function AppHeader() {
       <div className="max-w-8xl mx-auto px-4 sm:px-5 lg:px-6 py-3 flex items-center justify-between">
         <div className="flex items-center gap-2 text-cyan-100 font-semibold">
           <span className="text-xl neon-text-cyan">DanTV</span>
-          <span className="text-xs text-cyan-100/70 uppercase tracking-wide">AI CUSTOMER-SERVICE Desk</span>
+          <span className="text-xs text-cyan-100/70 uppercase tracking-wide">AI Service Co-Pilot</span>
         </div>
         <nav className="flex items-center gap-2">
           {links.map((link) => {
