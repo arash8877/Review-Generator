@@ -146,6 +146,7 @@ export default function PhoneCallsPage() {
         call.id === selectedCallId ? { ...call, status: "resolved" } : call
       )
     );
+    setGeneratedResponse(null);
     toast.success("Follow-up saved and call closed", {
       description: "Marked as resolved with AI recap.",
     });
