@@ -7,7 +7,7 @@ interface ReviewSelectorProps {
   reviews: Review[];
   selectedReviewId: string | null;
   onSelectReview: (reviewId: string) => void;
-  onReorderReviews?: (reviews: Review[]) => void;
+  onReorder?: (reviews: Review[]) => void;
   filters: Filters;
   onFiltersChange: (filters: Filters) => void;
   searchTerm: string;
@@ -153,7 +153,7 @@ export function ReviewSelector({
   reviews,
   selectedReviewId,
   onSelectReview,
-  onReorderReviews,
+  onReorder,
   filters,
   onFiltersChange,
   searchTerm,
